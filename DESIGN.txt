@@ -1,0 +1,30 @@
+Bomb It C!
+by Connie Lei, Charles Weng, and Jennifer Zhang
+
+Summary:
+Our program will mimic the popular children's game, Bomb It! -- Players will be able to move around, dropping bombs to destroy obstacles and kill other players. The goal of the game is to be the last one standing. Features will include powerups and multiplayer. Using networking, we will solve the problem of the original game, which limited all players to one machine.
+
+Usage/User Interface:
+When you launch the program, there will be a starting prompt, which will display options for flags:
+     -h host a new game, which returns the KEY for other players to connect
+     	There will be a prompt for the host if they want to start the game, as well has how many computer players they want in the game.
+     -c <KEY> connect to the game with KEY
+     -r return the rules of the game and what each ascii character represents
+After you successfully created/connected to a game, and the host starts the game, then you can play!
+On the lefthand side, your stats will be displayed. The righthand side will display the map, as well as all the players on it.
+
+Rules:
+	Controls:
+		WASD: Move your character
+    		Spacebar: Drop bomb/Use powerup (if there is one)
+	How to play:
+	        The goal of the game is to be the last one standing. Move around and kill other players by bombing them. There will be obstacles in the way, some bombable, and others indestructable. Clear them with a chance of getting powerups.
+	Ascii Representations:
+		P: Player (Different Colors)
+		O: Bomb
+		#: Bomb explosion range (red)
+		Powerups:
+			+: Increase maximum bomb's limit
+			*: Increase bomb power (increasing its explosion range)
+			
+			 
