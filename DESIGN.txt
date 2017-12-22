@@ -7,11 +7,14 @@ Our program will mimic the popular children's game, Bomb It! -- Players will be 
 Usage/User Interface:
 When you launch the program, there will be a starting prompt, which will display options for flags:
      -h host a new game, which returns the KEY for other players to connect
-     	There will be a prompt for the host if they want to start the game, as well has how many computer players they want in the game.
+     	There will be a prompt for the host if they want to start the game, as well as the map and how many computer players they want in the game.
      -c <KEY> connect to the game with KEY
      -r return the rules of the game and what each ascii character represents
 After you successfully created/connected to a game, and the host starts the game, then you can play!
-On the lefthand side, your stats will be displayed. The righthand side will display the map, as well as all the players on it.
+     -m list maps: will have options to create and choose maps to see how they look like
+WHEN CREATING A MAP: On the lefthand side, commands for placing obstacles will be displayed. The righthand side will display the map.
+
+WHEN PLAYING: On the lefthand side, your stats will be displayed. The righthand side will display the map, as well as all the players on it.
 
 Rules:
 	Controls:
@@ -22,9 +25,27 @@ Rules:
 	Ascii Representations:
 		P: Player (Different Colors)
 		O: Bomb
-		#: Bomb explosion range (red)
+		#: Bomb explosion range (solid red)
+		#: Indestructable obstacle (solid white)
+		#: Bombable obstacle (white)
 		Powerups:
 			+: Increase maximum bomb's limit
 			*: Increase bomb power (increasing its explosion range)
-			
+			m: Add gloves (for the rest of the game, you can push bombs around -- while in mid-push, the bomb's timer is frozen.)
+
+Technical Design:
+Maps: Reading and writing from plain text files
+Networking:
+	Server:
+		Receiving player's movements
+		Sending the game information to the client
+	Client:
+		Hosting a game will fork off a server
+		Connecting to a game will connect to the server
+		Keyboard interception
+		Printing out the game into the terminal
+
+Team Roles:
+
+Timeline:
 			 
