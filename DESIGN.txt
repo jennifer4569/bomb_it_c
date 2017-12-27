@@ -46,6 +46,16 @@ Networking:
 		Printing out the game into the terminal
 
 Team Roles:
+	Connie:
+		Front end: Figure out terminal codes for coloring and designing
+		Keyboard Interception: Figure out how to incorporate keyboard interception so that the game can function with controls
+	Charles:
+		Networking: Working out multiplayer features
+	Jennifer:
+		Gameplay: The basics of the game, with players stats, bombs, and powerups
+		Maps: Loading maps, and if there's time, creating maps.
 
 Timeline:
-			 
+January 5: Finish basic components of the game: player stats and bombs, and front end and keyboard interception.
+January 12: Finish powerups, multiplayer features and menus, with starting screen, play screen, and load maps.
+January 19: If time, work on creating maps and computer players.
