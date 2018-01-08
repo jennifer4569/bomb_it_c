@@ -44,7 +44,7 @@ void print_map(int curr, int colorize){
     printf("%c", c);
   }
   else{
-    printf("\033[0;%d;%d%c", foreground, background, c);
+    printf("\033[0;%d;%dm%c", foreground, background, c);
   }
 }
 void display_map(struct map * m){
