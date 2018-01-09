@@ -11,9 +11,9 @@ main.o: main.c bomb_it.h
 	gcc -c main.c bomb_it.h
 
 clean:
-	-rm *.o
-	-rm *~
-	-rm *.gch
+	-rm -rf *.o
+	-rm -rf *~
+	-rm -rf *.gch
 
 run: all
 	./bomb_it.exe

@@ -56,6 +56,22 @@ Team Roles:
 		Maps: Loading maps, and if there's time, creating maps.
 
 Timeline:
-January 5: Finish basic components of the game: player stats and bombs, and front end and keyboard interception.
-January 12: Finish powerups, multiplayer features and menus, with starting screen, play screen, and load maps.
-January 19: If time, work on creating maps and computer players.
+
+January 6:
+	Basic structure for the game
+
+January 10:
+	Menus: Starting prompt, flags, etc.
+
+January 12:
+	Keyboard interception: player basic movement
+	
+January 19, MVP done:
+	Finish game features: hardcode maps, dropping bombs, powerups, killing enemies, destroying obstacles, etc.
+	Front end: game will display stats, and colors will be prettier
+	Networking: Multiplayer features, hosting and connecting to a game
+
+
+January 24, Post-MVP:
+	Maps: Creating maps and loading them into the game
+	Computer Players: **if time**

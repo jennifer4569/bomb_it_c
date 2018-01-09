@@ -41,6 +41,6 @@ void main(){
   while(1){  
     m = update_map(m);
     display_map(m);
-    sleep(1.5);
+    sleep(1);
   }
 }

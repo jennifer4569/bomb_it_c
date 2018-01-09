@@ -54,7 +54,7 @@ void display_map(struct map * m){
   while(i < ROW){
     j = 0;
     while(j < COL){
-      print_map(m->grid[i][j], -1);
+      print_map(m->grid[i][j], 1);
       j++;
     }
     i++;
