@@ -63,6 +63,8 @@ struct bomb drop_bomb(int * location, int power);
 #define PLAYER 5 //if the space has a player on it
 #define BOMB 6 //if the space has a bomb on it
 
+#define ROW 20
+#define COL 40
 
 struct map{
   struct player players[4];

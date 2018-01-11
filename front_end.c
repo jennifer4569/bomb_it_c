@@ -16,7 +16,7 @@ struct map* update_map(struct map *m){
   m->grid[new_loca[0]][new_loca[1]] = PLAYER;
   m->players[0].location[0] = new_loca[0];
   m->players[0].location[1] = new_loca[1];
-
+				      
   return m;
 
 };
