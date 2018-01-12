@@ -18,8 +18,9 @@ struct map* update_map(struct map *m){
   m->players[0].location[1] = new_loca[1];
   */
   int i=0;
-  while(m->players[i]){
+  while(i < m->num_players){
     move(m->players[i], m, -1);
+    i++;
   }	      
   return m;
 

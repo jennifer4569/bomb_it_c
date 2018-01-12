@@ -42,12 +42,13 @@ struct bomb{
 //returns newly created player
 struct player* create_player(int is_cpu, int x, int y);
 
-// move() takes in the player, the map, and the player's move
+// move() takes in the player, the map, and the player's code for a move
 // move won't be considered if the player is a cpu
 // it will return the player
-struct player * move(struct player * player, struct map * map, int move);
+struct player * move(struct player * p, struct map * m, int move);
 
-
+//given the code for the move and the current location, return the new location if the move were to happen
+int * try_move(int * location, int move);
 
 // drop_bomb() takes in a location and its power (player->location, player->bomb_power)
 // creates the bomb and returns the newly created bomb
@@ -70,11 +71,18 @@ struct bomb* drop_bomb(int * location, int power);
 #define ROW 20
 #define COL 40
 
+//for computer player
+#define UP 0
+#define RIGHT 1
+#define DOWN 2
+#define LEFT 3
+
 struct map{
-  struct player players[4];
+  struct player* players[4];
   struct bomb bombs[20];
   //int ** grid; //int will determine each tile's properties
   int grid[ROW][COL];
+  int num_players;
 };
 
 //update_map() takes in the map, updates it, then returns the newly updated map

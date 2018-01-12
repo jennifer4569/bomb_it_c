@@ -50,7 +50,7 @@ struct map * init_game(){
       */
       if(curr_char == 'P'){
 	curr_map_key = PLAYER;
-	m->players[num_players]=*create_player(1, x, y);
+	m->players[num_players]=create_player(1, x, y);
 	num_players++;
       }
       if(curr_char == 'O'){
@@ -62,6 +62,7 @@ struct map * init_game(){
     x++;
   }
   while(curr_line = strtok(NULL, "\n"));
+  m->num_players=num_players;
   return m;
 }
 
