@@ -4,31 +4,9 @@
 //malloc struct map
 //load in map
 //return map
-struct map * init_game(){
-  /*struct map* m = malloc(sizeof(*m));
-  int i = 0;
-  int j = 0;
-  while(i < ROW){
-    j = 0;
-    while(j < COL){
-      if(i == 0 || i == ROW-1 || j == 0 || j == COL-1){
-	m->grid[i][j] = INDESTRUCT;
-      }
-      else{
-	m->grid[i][j] = SAFE;
-      }
-      j++;
-    }
-    i++;
-  }
-  m->grid[2][18] = PLAYER;
-    
-  struct player* p1 = malloc(sizeof(*p1));
-  p1->location[0]=2;
-  p1->location[1]=18;
 
-  m->players[0] = *p1;
-  */
+//NEED TO CHECK FOR CERTAIN CHARACTERS
+struct map * init_game(){
   struct map* m = malloc(sizeof(*m));
 
   struct stat sb;
@@ -41,13 +19,14 @@ struct map * init_game(){
   char * curr_line;
   char curr_char;
   int curr_map_key;
-  int i = 0;
-  int j = 0;
+  int x = 0;
+  int y = 0;
+  int num_players = 0;
   curr_line = strtok(rd_info, "\n");
   do{
-  j = 0;
-    while(curr_line[j]){
-      curr_char = curr_line[j];
+  y = 0;
+    while(curr_line[y]){
+      curr_char = curr_line[y];
       if(curr_char == ' '){
 	curr_map_key = SAFE;
       }
@@ -71,22 +50,19 @@ struct map * init_game(){
       */
       if(curr_char == 'P'){
 	curr_map_key = PLAYER;
-	struct player* p0 = (struct player *)malloc(sizeof(p0));
-	p0->location[0]=i;
-	p0->location[1]=j;
-	m->players[0]=*p0;
+	m->players[num_players]=*create_player(1, x, y);
+	num_players++;
       }
       if(curr_char == 'O'){
 	curr_map_key = BOMB;
       }
-      m->grid[i][j]=curr_map_key;
-      j++;
+      m->grid[x][y]=curr_map_key;
+      y++;
     }
-    i++;
+    x++;
   }
   while(curr_line = strtok(NULL, "\n"));
   return m;
-  
 }
 
 
@@ -96,6 +72,6 @@ void main(){
   while(1){  
     m = update_map(m);
     display_map(m);
-     sleep(1);
+    sleep(1);
   }
 }

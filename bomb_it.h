@@ -38,16 +38,20 @@ struct bomb{
   int timer;
 };
 
+//create_player() takes in its location and is_cpu (-1 if isnt cpu, else it is a cpu)
+//returns newly created player
+struct player* create_player(int is_cpu, int x, int y);
 
-// move() takes in the player's location and the player's move
-// it will return the player's new location if the move is going to be made
-int * move(int * location, int move);
+// move() takes in the player, the map, and the player's move
+// move won't be considered if the player is a cpu
+// it will return the player
+struct player * move(struct player * player, struct map * map, int move);
 
 
 
 // drop_bomb() takes in a location and its power (player->location, player->bomb_power)
 // creates the bomb and returns the newly created bomb
-struct bomb drop_bomb(int * location, int power);
+struct bomb* drop_bomb(int * location, int power);
 
 
 //terminal codes

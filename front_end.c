@@ -1,6 +1,6 @@
 #include "bomb_it.h"
 struct map* update_map(struct map *m){
-  int prev_loca[2];
+  /*int prev_loca[2];
   prev_loca[0] = m->players[0].location[0];
   prev_loca[1] = m->players[0].location[1];
   m->grid[prev_loca[0]][prev_loca[1]] = INDESTRUCT;
@@ -16,7 +16,11 @@ struct map* update_map(struct map *m){
   m->grid[new_loca[0]][new_loca[1]] = PLAYER;
   m->players[0].location[0] = new_loca[0];
   m->players[0].location[1] = new_loca[1];
-				      
+  */
+  int i=0;
+  while(m->players[i]){
+    move(m->players[i], m, -1);
+  }	      
   return m;
 
 };
