@@ -13,7 +13,8 @@ main.o: main.c bomb_it.h
 clean:
 	-rm -rf *.o
 	-rm -rf *~
-	-rm -rf *.gch
+	-rm -rf *.gch	
+	-rm -rf bomb_it.exe	
 
 run: all
 	./bomb_it.exe

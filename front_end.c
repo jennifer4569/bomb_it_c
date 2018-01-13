@@ -18,8 +18,11 @@ struct map* update_map(struct map *m){
   m->players[0].location[1] = new_loca[1];
   */
   int i=0;
-  while(m->players[i]){
-    move(m->players[i], m, -1);
+  while(i < m->num_players){
+    //if(m->players[i]->is_alive != -1){
+      go(m->players[i], m, -1);
+      //}
+    i++;
   }	      
   return m;
 
