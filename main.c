@@ -31,7 +31,7 @@ struct map * init_game(){
 	curr_map_key = SAFE;
       }
       /*
-	if(curr_char == ' beleh'){
+	if(curr_char == '-'){
 	curr_map_key = UNSAFE;
 	}
 	if(curr_char == ' beleh'){

@@ -19,7 +19,9 @@ struct map* update_map(struct map *m){
   */
   int i=0;
   while(i < m->num_players){
-    move(m->players[i], m, -1);
+    //if(m->players[i]->is_alive != -1){
+      go(m->players[i], m, -1);
+      //}
     i++;
   }	      
   return m;

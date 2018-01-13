@@ -10,51 +10,6 @@
 #ifndef HEADERS
 #define HEADERS
 
-/*
-  DEFAULT VALUES
-  int num_bombs = 1; number of bombs a player can have at once
-  int shield = 0; true -> protected against one death; false -> you lose
-  int bomb_power = 1; how strong your bombs are
-  int has_gloves = 0; true -> can push bombs
-  4 default map locations will be specified by map;
-*/
-struct player{
-  int num_bombs;
-  int shield;
-  int bomb_power;
-  int has_gloves;
-
-  int location[2];
-};
-
-/*
-  location set by player
-  time = 5; explodes at t = 0
-  power = how far in each direction the explosion goes
-*/
-struct bomb{
-  int location[2];
-  int power;
-  int timer;
-};
-
-//create_player() takes in its location and is_cpu (-1 if isnt cpu, else it is a cpu)
-//returns newly created player
-struct player* create_player(int is_cpu, int x, int y);
-
-// move() takes in the player, the map, and the player's code for a move
-// move won't be considered if the player is a cpu
-// it will return the player
-struct player * move(struct player * p, struct map * m, int move);
-
-//given the code for the move and the current location, return the new location if the move were to happen
-int * try_move(int * location, int move);
-
-// drop_bomb() takes in a location and its power (player->location, player->bomb_power)
-// creates the bomb and returns the newly created bomb
-struct bomb* drop_bomb(int * location, int power);
-
-
 //terminal codes
 #define CLEAR_SCREEN "\e[1;1H\e[2J"
 
@@ -77,6 +32,37 @@ struct bomb* drop_bomb(int * location, int power);
 #define DOWN 2
 #define LEFT 3
 
+
+/*
+  DEFAULT VALUES
+  int num_bombs = 1; number of bombs a player can have at once
+  int shield = 0; true -> protected against one death; false -> you lose
+  int bomb_power = 1; how strong your bombs are
+  int has_gloves = 0; true -> can push bombs
+  is_alive: if -1, then not alive, else alive
+  4 default map locations will be specified by map;
+*/
+struct player{
+  int num_bombs;
+  int shield;
+  int bomb_power;
+  int has_gloves;
+  //  int is_alive;
+
+  int location[2];
+};
+
+/*
+  location set by player
+  time = 5; explodes at t = 0
+  power = how far in each direction the explosion goes
+*/
+struct bomb{
+  int location[2];
+  int power;
+  int timer;
+};
+
 struct map{
   struct player* players[4];
   struct bomb bombs[20];
@@ -84,6 +70,24 @@ struct map{
   int grid[ROW][COL];
   int num_players;
 };
+
+//create_player() takes in its location and is_cpu (-1 if isnt cpu, else it is a cpu)
+//returns newly created player
+struct player* create_player(int is_cpu, int x, int y);
+
+// go() takes in the player, the map, and the player's code for a move
+// move won't be considered if the player is a cpu
+// it will return the player
+struct player * go(struct player*, struct map *, int);
+
+//given the code for the move and the current location, return the new location if the move were to happen
+int * try_move(int * location, int move);
+
+// drop_bomb() takes in a location and its power (player->location, player->bomb_power)
+// creates the bomb and returns the newly created bomb
+struct bomb* drop_bomb(int * location, int power);
+
+
 
 //update_map() takes in the map, updates it, then returns the newly updated map
 //calls key_intercept()
