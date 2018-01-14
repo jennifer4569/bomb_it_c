@@ -1,0 +1,81 @@
+Bomb It C!
+Connie Lei, Charles Weng, and Jennifer Zhang
+Systems pd4
+
+ _______   ________  __     __  __        ______    ______
+|       \ |        \|  \   |  \|  \      /      \  /      \
+| $$$$$$$\| $$$$$$$$| $$   | $$| $$     |  $$$$$$\|  $$$$$$\
+| $$  | $$| $$__    | $$   | $$| $$     | $$  | $$| $$ __\$$
+| $$  | $$| $$  \    \$$\ /  $$| $$     | $$  | $$| $$|    \
+| $$  | $$| $$$$$     \$$\  $$ | $$     | $$  | $$| $$ \$$$$
+| $$__/ $$| $$_____    \$$ $$  | $$_____| $$__/ $$| $$__| $$
+| $$    $$| $$     \    \$$$   | $$     \\$$    $$ \$$    $$
+ \$$$$$$$  \$$$$$$$$     \$     \$$$$$$$$ \$$$$$$   \$$$$$$
+
+**********<>***********
+Format (APPEND TO END)
+firstL -- TIMESTAMP
+**********<>***********
+
+============================================================
+
+connieL, charlesW, jenniferZ -- 2017-12-22 11:02 AM
+--------------------------------
+- Finished basic structure for DESIGN.txt -- almost done
+
+jenniferZ -- 2017-12-27 11:07 AM
+--------------------------------
+- Added timeline and team roles to DESIGN.txt
+
+jenniferZ -- 2017-12-31 1:32 PM
+--------------------------------
+- Created header files and added descriptions to functions
+  - Added bomb_it.h, bomb_player.h, front_end.h, bomb_player.c, front_end.c, main.c
+- Updated README.md to contain info about what each file does
+
+jenniferZ -- 2018-01-06 10:27 AM
+--------------------------------
+- Basic map displaying and updating features
+  - Hardcoded map and player movement
+  - Added terminal coloring for map display, kinda works
+
+jenniferZ -- 2018-01-08 04:19 PM
+--------------------------------
+- Fixed terminal coloring for map display
+
+connieL, charlesW, jenniferZ -- 2018-01-09 11:02 AM
+--------------------------------
+- Updated DESIGN.txt with new timeline
+
+charlesW -- 2018-01-11 10:38 AM
+--------------------------------
+- Cleaned up header files
+  - Condensed 3 header files into one:
+    - Deleted bomb_player.h and front_end.h
+    - bomb_it.h now contains all of our headers
+
+jenniferZ -- 2018-01-11 11:02 AM
+--------------------------------
+- Implemented loading map from a file
+
+jenniferZ -- 2018-01-12 11:00 AM
+--------------------------------
+- Started on CPU movement, breaks everything
+
+jenniferZ -- 2018-01-13 01:15 PM
+--------------------------------
+- Fixed CPU movement (hardcoded)
+  - Moved definitions and struct declarations in header file to the top
+
+jenniferZ -- 2018-01-14 01:23 PM
+--------------------------------
+- Changed definitions for powerups, since we need to know what type of powerup it is
+- Added flags for whichever mode you wanted to start in
+  - Added host, connect, rules, and maps in makefile, each with their corresponding flags
+- Worked on map display
+  - Colorize works for almost everything on the map now (except for different players)
+  - Bombs and powerups alternate between displays
+    - Bombs go from 'O' to 'o'
+    - Powerups blink
+- Modified map reading implementation
+  - Now the .txt files containing the maps are filled with their corresponding map keys
