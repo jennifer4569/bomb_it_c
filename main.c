@@ -56,8 +56,8 @@ int main(int argc, char* argv[]){
       m = update_map(m);
       display_map(m, time);
       time++;
-      //usleep(500000);
-      sleep(1);
+      usleep(500000);
+      //sleep(1);
     }
     return 1;
   }
