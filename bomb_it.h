@@ -19,9 +19,11 @@
 #define UNSAFE 1 //if the space is empty and is in a bomb's explosion range
 #define DESTRUCT 2 //if the space has an obstacle and if it's bombable
 #define INDESTRUCT 3 //if the space has an obstacle and if it's indestructable
-#define POWERUP 4 //if the space has a powerup on it
-#define PLAYER 5 //if the space has a player on it
-#define BOMB 6 //if the space has a bomb on it
+#define PLAYER 4 //if the space has a player on it
+#define BOMB 5 //if the space has a bomb on it
+#define POWERUP_ADD_BMB 6 //if the space has a add bomb powerup on it
+#define POWERUP_BMB_PWR 7 //if the space has a add bomb power powerup on it
+#define POWERUP_ADD_GLV 8 //if the space has an add gloves powerup on it
 
 #define ROW 20
 #define COL 40
@@ -103,12 +105,12 @@ struct map* update_map(struct map*);
 
 
 // display_map() takes in the map, and displays it
-void display_map(struct map* );
+void display_map(struct map* m, int time);
 
 //print_map() takes one grid tile's int value at a time, and prints that out as a char
 //if colorize is -1, then the printing will not be colorized
 //else, it will be
-void print_map(int curr, int colorize);
+void print_map(int curr, int colorize, int time);
 
 //key_intercept() takes in the map, updates it based on keyboard commands, then returns the new map
 struct map* key_intercept(struct map*);

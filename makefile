@@ -18,3 +18,15 @@ clean:
 
 run: all
 	./bomb_it.exe
+
+host: all
+	./bomb_it.exe -h
+
+connect: all
+	./bomb_it.exe -c
+
+rules: all
+	./bomb_it.exe -r
+
+maps: all
+	./bomb_it.exe -m

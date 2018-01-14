@@ -17,7 +17,6 @@ struct map * init_game(){
   read(fd, rd_info, sb.st_size);
   
   char * curr_line;
-  char curr_char;
   int curr_map_key;
   int x = 0;
   int y = 0;
@@ -26,35 +25,10 @@ struct map * init_game(){
   do{
   y = 0;
     while(curr_line[y]){
-      curr_char = curr_line[y];
-      if(curr_char == ' '){
-	curr_map_key = SAFE;
-      }
-      /*
-	if(curr_char == '-'){
-	curr_map_key = UNSAFE;
-	}
-	if(curr_char == ' beleh'){
-	curr_map_key = DESTRUCT;
-	}
-	
-      */
-      if(curr_char == '#'){
-	curr_map_key = INDESTRUCT;
-      }
-      /*
-	if(curr_char == '+' || curr_char == '*' || curr_char == 'm'){
-	curr_map_key = POWERUP;
-	//need a way to save which powerup it is
-	}
-      */
-      if(curr_char == 'P'){
-	curr_map_key = PLAYER;
+      curr_map_key = curr_line[y] - '0';
+      if(curr_map_key == PLAYER){
 	m->players[num_players]=create_player(1, x, y);
 	num_players++;
-      }
-      if(curr_char == 'O'){
-	curr_map_key = BOMB;
       }
       m->grid[x][y]=curr_map_key;
       y++;
@@ -66,13 +40,48 @@ struct map * init_game(){
   return m;
 }
 
-
-void main(){
-  struct map* m = init_game();
-  int i = 0;
-  while(1){  
-    m = update_map(m);
-    display_map(m);
-    sleep(1);
+int main(int argc, char* argv[]){
+  if(!argv[1]){
+    printf("There is no argument!\n");
+    return -1;
   }
+  //host a game
+  if(strcmp(argv[1], "-h")==0){
+    //waits for the host to start
+
+    //starts game(currently only has cpu players)
+    struct map* m = init_game();
+    int time = 0;
+    while(1){  
+      m = update_map(m);
+      display_map(m, time);
+      time++;
+      //usleep(500000);
+      sleep(1);
+    }
+    return 1;
+  }
+  //connect to game with key
+  if(strcmp(argv[1], "-c")==0){
+    if(!argv[2]){
+      printf("Please enter a key!\n");
+      return -1;
+    }
+    else{
+      
+      return 1;
+    }
+  }
+  //rules of the game
+  if(strcmp(argv[1], "-r")==0){
+
+    return 1;
+  }
+  //list maps
+  if(strcmp(argv[1], "-m")==0){
+    
+    return 1;
+  }
+  printf("Arguments are incorrect. Try again.\n");
+  return -1;
 }

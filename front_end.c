@@ -28,24 +28,67 @@ struct map* update_map(struct map *m){
 
 };
 
-void print_map(int curr, int colorize){
-  int foreground, background;
+void print_map(int curr, int colorize, int time){
+  int foreground=232; //white
+  int background=40; //black
   char c;
   if(curr == SAFE){
-    foreground = 35;
-    background = 40;
     c = ' ';
   }
+  if(curr==UNSAFE){
+    background=41; //red
+    c=' ';
+  }
+  if(curr==DESTRUCT){
+    c='#';
+  }
   if(curr == INDESTRUCT){
-    foreground = 37;
-    background = 47;
+    foreground = 37; //white
+    background = 47; //white
     c = '#';
   }
   if(curr == PLAYER){
-    foreground = 33;
-    background = 40;
+    foreground = 33; //yellow
     c = 'P';
   }
+  if(curr==BOMB){
+    foreground=91; //red
+    //alternates
+    if(time%2){
+      c='O';
+    }
+    else{
+      c='o';
+    }
+  }
+  if(curr==POWERUP_ADD_BMB){
+    foreground=92;
+    if(time%2){
+      c='+';
+    }
+    else{
+      c=' ';
+    }
+  }
+  if(curr==POWERUP_BMB_PWR){
+    foreground=95;
+    if(time%2){
+      c='*';
+    }
+    else{
+      c=' ';
+    }
+  }
+  if(curr==POWERUP_ADD_GLV){
+    foreground=96;
+    if(time%2){
+      c='m';
+    }
+    else{
+      c=' ';
+    }
+  }
+
 
   if(colorize == -1){
     printf("%c", c);
@@ -54,17 +97,17 @@ void print_map(int curr, int colorize){
     printf("\033[0;%d;%dm%c", foreground, background, c);
   }
 }
-void display_map(struct map * m){
+void display_map(struct map * m, int time){
   printf("%s", CLEAR_SCREEN); //clears screen
   int i = 0;
   int j = 0;
   while(i < ROW){
     j = 0;
     while(j < COL){
-      print_map(m->grid[i][j], 1);
+      print_map(m->grid[i][j], 1, time);
       j++;
     }
     i++;
-    printf("\n");
+    printf("\033[0;%d;%dm\n", 39, 40); //makes new line and clear screen not make the entire screen white
   }
 }
