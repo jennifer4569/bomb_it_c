@@ -21,6 +21,7 @@ struct map * init_game(){
   int x = 0;
   int y = 0;
   int num_players = 0;
+  int num_bombs = 0;
   curr_line = strtok(rd_info, "\n");
   do{
   y = 0;
@@ -30,6 +31,10 @@ struct map * init_game(){
 	m->players[num_players]=create_player(1, x, y);
 	num_players++;
       }
+      if(curr_map_key==BOMB){
+	m->bombs[num_bombs]=drop_bomb(x, y, 1);
+	num_bombs++;
+      }
       m->grid[x][y]=curr_map_key;
       y++;
     }
@@ -37,6 +42,7 @@ struct map * init_game(){
   }
   while(curr_line = strtok(NULL, "\n"));
   m->num_players=num_players;
+  m->num_bombs=num_bombs;
   return m;
 }
 
@@ -55,9 +61,9 @@ int main(int argc, char* argv[]){
     while(1){  
       m = update_map(m);
       display_map(m, time);
+      display_stats(m->players[0]); //that's you
       time++;
       usleep(500000);
-      //sleep(1);
     }
     return 1;
   }

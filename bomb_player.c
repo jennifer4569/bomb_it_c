@@ -8,8 +8,29 @@ struct player* create_player(int is_cpu, int x, int y){
   p->has_gloves=-1;
   p->location[0]=x;
   p->location[1]=y;
-  //p->is_alive=1;
   return p;
+}
+
+struct bomb* drop_bomb(int x, int y, int power){
+  struct bomb* b;
+  b = (struct bomb*)malloc(sizeof(b));
+  b->location[0] = x;
+  b->location[1]=y;
+  b->power=power;
+  b->timer=5;
+  return b;
+}
+struct bomb* tick_bomb(struct bomb* b, struct map*m){
+  b->timer--;
+  if(b->timer==0){
+    //explode the bomb
+    m->grid[b->location[0]][b->location[1]]=UNSAFE;
+    int i=0;
+    while(i < b->power){
+      //explode around the center
+    }
+  }
+  return b;
 }
 
 struct player * go(struct player* p, struct map * m, int move){
@@ -37,11 +58,12 @@ struct player * go(struct player* p, struct map * m, int move){
     p->location[0]=new_loca[0];
     p->location[1]=new_loca[1];
     m->grid[new_loca[0]][new_loca[1]]=PLAYER;
-  }/*
+  }
   if(new_key==UNSAFE){
     m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
-    p->is_alive=-1;
-    }*/
+    p=NULL;
+    free(p);
+  }
   free(new_loca);
   return p;
 }

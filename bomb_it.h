@@ -67,10 +67,11 @@ struct bomb{
 
 struct map{
   struct player* players[4];
-  struct bomb bombs[20];
+  struct bomb* bombs[20000000];
   //int ** grid; //int will determine each tile's properties
   int grid[ROW][COL];
   int num_players;
+  int num_bombs;
 };
 
 //create_player() takes in its location and is_cpu (-1 if isnt cpu, else it is a cpu)
@@ -87,8 +88,10 @@ int * try_move(int * location, int move);
 
 // drop_bomb() takes in a location and its power (player->location, player->bomb_power)
 // creates the bomb and returns the newly created bomb
-struct bomb* drop_bomb(int * location, int power);
+struct bomb* drop_bomb(int x, int y, int power);
 
+//tick_bomb() takes in the bomb, if timer = 0, then explode
+struct bomb* tick_bomb(struct bomb* b, struct map*m);
 
 
 //update_map() takes in the map, updates it, then returns the newly updated map
@@ -106,6 +109,9 @@ struct map* update_map(struct map*);
 
 // display_map() takes in the map, and displays it
 void display_map(struct map* m, int time);
+
+//display_stats() takes in the player, and displays its stats
+void display_stats(struct player*p);
 
 //print_map() takes one grid tile's int value at a time, and prints that out as a char
 //if colorize is -1, then the printing will not be colorized
