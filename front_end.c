@@ -1,22 +1,5 @@
 #include "bomb_it.h"
 struct map* update_map(struct map *m){
-  /*int prev_loca[2];
-  prev_loca[0] = m->players[0].location[0];
-  prev_loca[1] = m->players[0].location[1];
-  m->grid[prev_loca[0]][prev_loca[1]] = INDESTRUCT;
-    
-  int new_loca[2];
-  new_loca[0] = prev_loca[0]+1;
-  new_loca[1] = prev_loca[1];
-
-  if(new_loca[0] == ROW){
-    new_loca[0]--;
-  }
-  
-  m->grid[new_loca[0]][new_loca[1]] = PLAYER;
-  m->players[0].location[0] = new_loca[0];
-  m->players[0].location[1] = new_loca[1];
-  */
   int i=0;
   while(i < m->num_players){
     //if(m->players[i]->is_alive != -1){
@@ -31,7 +14,8 @@ struct map* update_map(struct map *m){
 void print_map(int curr, int colorize, int time){
   int format=0;//default
   int foreground=232; //white
-  int background=40; //black
+  //int background=40; //black
+  int background=100;
   char c;
   if(curr == SAFE){
     c = ' ';
