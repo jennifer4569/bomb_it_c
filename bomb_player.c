@@ -26,16 +26,27 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
     //explode the bomb
     m->grid[b->location[0]][b->location[1]]=UNSAFE;
     int i=0;
+    //explode around the center, starting from inside out
     while(i < b->power){
-      //explode around the center
+      int j=0; //j represents UP, DOWN, LEFT, or RIGHT
+      while(j<4){
+	int * temp= try_move(b->location, j, i);
+	if(m->grid[temp[0]][temp[1]]){
+	  m->grid[temp[0]][temp[1]]=UNSAFE;
+	}
+	free(temp);
+	j++;
+      }
+      i++;
     }
   }
   return b;
 }
 
+
 struct player * go(struct player* p, struct map * m, int move){
   int *prev_loca=p->location;
-  int *new_loca = try_move(p->location, RIGHT);
+  int *new_loca = try_move(p->location, RIGHT, 1);
   int new_key=m->grid[new_loca[0]][new_loca[1]];
   int can_move=-1;
   if(new_key==SAFE){
@@ -68,25 +79,25 @@ struct player * go(struct player* p, struct map * m, int move){
   return p;
 }
 
-int * try_move(int * location, int move){
+int * try_move(int * location, int move, int move_pwr){
   int* new_loca = (int*)malloc(sizeof(new_loca));
   new_loca[0]=location[0];
   new_loca[1]=location[1];
   if(move==UP){
-    new_loca[0]+=-1;
+    new_loca[0]+=-move_pwr;
     new_loca[1]+=0;
   }
   if(move==RIGHT){
     new_loca[0]+=0;
-    new_loca[1]+=1;
+    new_loca[1]+=move_pwr;
   }
   if(move==DOWN){
-    new_loca[0]+=1;
+    new_loca[0]+=move_pwr;
     new_loca[1]+=0;
   }
   if(move==LEFT){
     new_loca[0]+=0;
-    new_loca[1]+=-1;
+    new_loca[1]+=-move+pwr;
   }
   return new_loca;
 }

@@ -84,7 +84,7 @@ struct player* create_player(int is_cpu, int x, int y);
 struct player * go(struct player*, struct map *, int);
 
 //given the code for the move and the current location, return the new location if the move were to happen
-int * try_move(int * location, int move);
+int * try_move(int * location, int move, int move_pwr);
 
 // drop_bomb() takes in a location and its power (player->location, player->bomb_power)
 // creates the bomb and returns the newly created bomb
