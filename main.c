@@ -7,6 +7,7 @@
 
 //NEED TO CHECK FOR CERTAIN CHARACTERS
 struct map * init_game(){
+  srand(time(NULL));
   struct map* m = malloc(sizeof(*m));
 
   struct stat sb;

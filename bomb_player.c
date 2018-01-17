@@ -36,12 +36,53 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
     int j=0;
     while(j<4){
       i=1;
-      while(i <= b->power){
+      int check=b->power;
+
+      //makes it look more like a square
+      if(j==UP||j==DOWN){
+	check=check/2;
+      }
+      while(i <= check){
 	int * temp= try_move(b->location, j, i);
-    	if(m->grid[temp[0]][temp[1]]==INDESTRUCT){
+	int curr_code=m->grid[temp[0]][temp[1]];
+    	if(curr_code==INDESTRUCT){
+	  //free(temp);
+	  break;
+
+	}
+	if(curr_code==PLAYER){
+	  int k = 0;
+	  while(k < m->num_players){
+	    if(m->players[k]){
+	      if(m->players[k]->location[0]==temp[0]&&m->players[k]->location[1]==temp[1]){
+		m->players[k]=NULL;
+		free(m->players[k]);
+		//free(temp);
+		break;
+	      }
+	    }
+	    k++;
+	  }
+	}/*
+	if(curr_code==DESTRUCT){
+	  int rand_num = rand() % 10;
+	  if(rand_num==0){
+	    bmb_code=POWERUP_ADD_BMB;
+	  }
+	  if(rand_num==1){
+	    bmb_code=POWERUP_BMB_PWR;
+	  }
+	  if(rand_num==2){
+	    bmb_code=POWERUP_ADD_GLV;
+	  }
+	  m->grid[temp[0]][temp[1]]=bmb_code;
 	  break;
 	}
+	if(curr_code==POWERUP_ADD_BMB||curr_code==POWERUP_BMB_PWR||curr_code==POWERUP_ADD_GLV){
+	  bmb_code=curr_code;
+	  }*/
 	m->grid[temp[0]][temp[1]]=bmb_code;
+	
 	free(temp);
     	i++;
       }
