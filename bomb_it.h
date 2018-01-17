@@ -50,8 +50,9 @@ struct player{
   int shield;
   int bomb_power;
   int has_gloves;
-  //  int is_alive;
-
+  int is_cpu;
+  //struct map* b;
+  
   int location[2];
 };
 
@@ -68,10 +69,12 @@ struct bomb{
 
 struct map{
   struct player* players[4];
+  //struct player* cpu[4];
   struct bomb* bombs[20000000];
   //int ** grid; //int will determine each tile's properties
   int grid[ROW][COL];
   int num_players;
+  //int num_cpu;
   int num_bombs;
 };
 
@@ -83,6 +86,9 @@ struct player* create_player(int is_cpu, int x, int y);
 // move won't be considered if the player is a cpu
 // it will return the player
 struct player * go(struct player*, struct map *, int);
+
+//for cpu player, used for the cpu to find the best move for itself
+int find_best_move(struct player* p, struct map* m);
 
 //given the code for the move and the current location, return the new location if the move were to happen
 int * try_move(int * location, int move, int move_pwr);

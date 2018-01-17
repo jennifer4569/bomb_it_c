@@ -1,13 +1,15 @@
 #include "bomb_it.h"
 
 struct player* create_player(int is_cpu, int x, int y){
-  struct player* p = (struct player *)malloc(sizeof(p));
+  struct player* p = (struct player *)malloc(sizeof(p)*50);
   p->num_bombs=1;
   p->shield=0;
   p->bomb_power=1;
   p->has_gloves=-1;
   p->location[0]=x;
   p->location[1]=y;
+
+  p->is_cpu=is_cpu;
   return p;
 }
 
@@ -94,38 +96,50 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
 
 
 struct player * go(struct player* p, struct map * m, int move){
-  int *prev_loca=p->location;
-  int *new_loca = try_move(p->location, RIGHT, 1);
-  int new_key=m->grid[new_loca[0]][new_loca[1]];
-  int can_move=-1;
-  if(new_key==SAFE){
-    can_move=1;
+  if(p->is_cpu == -1){
+    
   }
-  if(new_key==POWERUP_ADD_BMB){
-    p->num_bombs++;
-    can_move=1;
+  else{
+    int move = find_best_move(p, m);
+    
+    int *prev_loca=p->location;
+    int *new_loca = try_move(p->location, move, 1);
+    int new_key=m->grid[new_loca[0]][new_loca[1]];
+    int can_move=-1;
+    if(new_key==SAFE){
+      can_move=1;
+    }
+    if(new_key==POWERUP_ADD_BMB){
+      p->num_bombs++;
+      can_move=1;
+    }
+    if(new_key==POWERUP_BMB_PWR){
+      p->bomb_power++;
+      can_move=1;
+    }
+    if(new_key==POWERUP_ADD_GLV){
+      p->has_gloves=1;
+      can_move=1;
+    }
+    if(can_move==1){
+      m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
+      p->location[0]=new_loca[0];
+      p->location[1]=new_loca[1];
+      m->grid[new_loca[0]][new_loca[1]]=PLAYER;
+    }
+    if(new_key==UNSAFE){
+      m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
+      p=NULL;
+      free(p);
+    }
+    free(new_loca);
   }
-  if(new_key==POWERUP_BMB_PWR){
-    p->bomb_power++;
-    can_move=1;
-  }
-  if(new_key==POWERUP_ADD_GLV){
-    p->has_gloves=1;
-    can_move=1;
-  }
-  if(can_move==1){
-    m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
-    p->location[0]=new_loca[0];
-    p->location[1]=new_loca[1];
-    m->grid[new_loca[0]][new_loca[1]]=PLAYER;
-  }
-  if(new_key==UNSAFE){
-    m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
-    p=NULL;
-    free(p);
-  }
-  free(new_loca);
   return p;
+}
+
+int find_best_move(struct player* p, struct map* m){
+  
+  return RIGHT;
 }
 
 int * try_move(int * location, int move, int move_pwr){
