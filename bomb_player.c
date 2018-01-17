@@ -17,27 +17,35 @@ struct bomb* drop_bomb(int x, int y, int power){
   b->location[0] = x;
   b->location[1]=y;
   b->power=power;
-  b->timer=5;
+  b->timer=8;
   return b;
 }
 struct bomb* tick_bomb(struct bomb* b, struct map*m){
   b->timer--;
+  int bmb_code;
   if(b->timer==0){
+    bmb_code=UNSAFE;
+  }
+  if(b->timer==-1){
+    bmb_code=SAFE;
+  }
+  if(b->timer==0||b->timer==-1){
     //explode the bomb
-    m->grid[b->location[0]][b->location[1]]=UNSAFE;
-    int i=0;
-    //explode around the center, starting from inside out
-    while(i < b->power){
-      int j=0; //j represents UP, DOWN, LEFT, or RIGHT
-      while(j<4){
+    m->grid[b->location[0]][b->location[1]]=bmb_code;
+    int i=1;
+    int j=0;
+    while(j<4){
+      i=1;
+      while(i <= b->power){
 	int * temp= try_move(b->location, j, i);
-	if(m->grid[temp[0]][temp[1]]){
-	  m->grid[temp[0]][temp[1]]=UNSAFE;
+    	if(m->grid[temp[0]][temp[1]]==INDESTRUCT){
+	  break;
 	}
+	m->grid[temp[0]][temp[1]]=bmb_code;
 	free(temp);
-	j++;
+    	i++;
       }
-      i++;
+      j++;
     }
   }
   return b;
@@ -97,7 +105,7 @@ int * try_move(int * location, int move, int move_pwr){
   }
   if(move==LEFT){
     new_loca[0]+=0;
-    new_loca[1]+=-move+pwr;
+    new_loca[1]+=-move_pwr;
   }
   return new_loca;
 }

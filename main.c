@@ -32,7 +32,7 @@ struct map * init_game(){
 	num_players++;
       }
       if(curr_map_key==BOMB){
-	m->bombs[num_bombs]=drop_bomb(x, y, 1);
+	m->bombs[num_bombs]=drop_bomb(x, y, 2);
 	num_bombs++;
       }
       m->grid[x][y]=curr_map_key;
