@@ -13,7 +13,7 @@ struct map * init_game(){
   struct stat sb;
   stat("maps/map0.txt", &sb);
   
-  int fd = open("maps/map0.txt", O_RDONLY);
+  int fd = open("maps/map2.txt", O_RDONLY);
   char rd_info[sb.st_size];
   read(fd, rd_info, sb.st_size);
   
@@ -29,7 +29,12 @@ struct map * init_game(){
     while(curr_line[y]){
       curr_map_key = curr_line[y] - '0';
       if(curr_map_key == PLAYER){
-	m->players[num_players]=create_player(1, x, y);
+	if(num_players==0){
+	  m->players[num_players]=create_player(1, x, y);
+	}
+	else{
+	  m->players[num_players]=create_player(-1, x, y);
+	}
 	num_players++;
       }
       if(curr_map_key==BOMB){
