@@ -13,7 +13,7 @@ struct map * init_game(){
   struct stat sb;
   stat("maps/map0.txt", &sb);
   
-  int fd = open("maps/map2.txt", O_RDONLY);
+  int fd = open("maps/map3.txt", O_RDONLY);
   char rd_info[sb.st_size];
   read(fd, rd_info, sb.st_size);
   
