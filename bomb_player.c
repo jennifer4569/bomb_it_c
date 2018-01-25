@@ -144,14 +144,15 @@ struct player * go(struct player* p, struct map * m, int move){
 int find_best_move(struct player* p, struct map* m){
   int direction=0;
 
-  int highest_priority;
-  int highest_direction;
+  int highest_priority = 10;
+  int num_highest_priority = 0;  
+  int priority[4];
   
   while(direction<4){
     int* temp=try_move(p->location, direction, 1);
     int curr_code=m->grid[temp[0]][temp[1]];
     int curr_priority;
-    
+
     //powerup, player, destruct, safe, indestruct, bomb, unsafe 
     if(curr_code==POWERUP_ADD_BMB||curr_code==POWERUP_BMB_PWR||curr_code==POWERUP_ADD_GLV){
       curr_priority=1;
@@ -168,20 +169,28 @@ int find_best_move(struct player* p, struct map* m){
     if(curr_code==UNSAFE){
       curr_priority=5;
     }
-    
+    priority[direction]=curr_priority;
     if(highest_priority > curr_priority){
       highest_priority=curr_priority;
-      highest_direction=direction;
+      num_highest_priority = 1;
     }
-    if(highest_priority==curr_priority){
-      if(rand()%2){
-	highest_direction=direction;
-      }
+    if(highest_priority == curr_priority){
+      num_highest_priority++;
     }
     direction++;
   }
 
-  return highest_direction;
+  int rand_num = rand() % num_highest_priority;
+  direction = 0;
+  while(direction < 4){
+    if(priority[direction] == highest_priority){
+      if(rand_num == 0){
+	return direction;
+      }
+      rand_num--;
+    }
+    direction++;
+  }
 }
 
 int * try_move(int * location, int move, int move_pwr){
