@@ -112,7 +112,7 @@ int server(){
       if(strcmp(buffer, "start") == 0){
         start++;
       }else{
-        printf("[server] Player Count: %d\nEnter 'start' to continue\n", players);
+        printf("[server] Player Count: %d\nEnter 'start' to start the game\n", players);
       }
     }
   }
@@ -132,7 +132,7 @@ int server(){
     // process each player input
     for(i = 0; i < players; i++){
       if (FD_ISSET(fds[i], &read_fds)){
-        fgets(buffer, sizeof(buffer), fds[i]);
+        read(buffer, sizeof(buffer), fds[i]);
         process(buffer);
       }
     }
