@@ -56,14 +56,27 @@ void windowSetup(){
 
 int main(int argc, char* argv[]){
   if(!argv[1]){
-    printf("There is no argument!\n");
+
+    printf("\n\n\nThere is no argument!");
+    struct stat sb;
+    stat("instructions.txt", &sb);
+    
+    int fd = open("instructions.txt", O_RDONLY);
+    char rules[sb.st_size];
+    read(fd, rules, sb.st_size);
+    
+    printf("%s", rules);
+    
+   
     return -1;
   }
   //host a game
   if(strcmp(argv[1], "-h")==0){
     //waits for the host to start
 
-    //starts game(currently only has cpu players)
+
+    
+    //starts game
     windowSetup();
     struct map* m = init_game();
     int time = 0;
@@ -104,6 +117,17 @@ int main(int argc, char* argv[]){
     
     return 1;
   }
-  printf("Arguments are incorrect. Try again.\n");
+  printf("\n\n\nArguments are incorrect. Try again.");
+  
+  struct stat sb;
+  stat("instructions.txt", &sb);
+    
+  int fd = open("instructions.txt", O_RDONLY);
+  char rules[sb.st_size];
+  read(fd, rules, sb.st_size);
+    
+  printf("%s", rules);
+    
+   
   return -1;
 }
