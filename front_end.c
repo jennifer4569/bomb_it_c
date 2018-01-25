@@ -1,7 +1,7 @@
 #include "bomb_it.h"
 struct map* update_map(struct map *m){
   int i=0;
-  
+
   while(i < m->num_players){
     if(m->players[i]){
       m->players[i]=go(m->players[i], m, -1);
@@ -25,9 +25,9 @@ struct map* update_map(struct map *m){
       rand_col=rand()%COL;
     }
     m->grid[rand_row][rand_col] = rand() % 3 + POWERUP_ADD_BMB;
-    
+
   }
-  
+
   return m;
 
 }
