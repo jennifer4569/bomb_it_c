@@ -13,8 +13,8 @@ main.o: main.c bomb_it.h
 clean:
 	-rm -rf *.o
 	-rm -rf *~
-	-rm -rf *.gch	
-	-rm -rf bomb_it.exe	
+	-rm -rf *.gch
+	-rm -rf bomb_it.exe
 
 run: all
 	./bomb_it.exe
@@ -30,3 +30,6 @@ rules: all
 
 maps: all
 	./bomb_it.exe -m
+
+test: all
+	gcc -o testS networking.c bomb_it.h main2.c
