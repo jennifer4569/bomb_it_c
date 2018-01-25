@@ -48,8 +48,8 @@
 #define LEFT 3
 
 // for networking
-#define BUFFER_SIZE 256
-#define PORT "9001"
+#define BUFFER_SIZE 4096
+#define PORT "0"
 #define TEST_IP "127.0.0.1"
 
 

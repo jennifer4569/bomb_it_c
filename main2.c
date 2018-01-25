@@ -55,6 +55,90 @@ client(char * server){
 }
 
 
+void process(char * s) {
+  // somethin
+}
+
+
+
+
+server(){
+  int listen_socket;
+  int client_socket;
+  int i;
+  int players = 0;
+  char buffer[BUFFER_SIZE];
+  int start = 0;
+  int fds[4];
+
+  // zero out fds list
+  for(i = 0; i < fds.length; i ++){
+    fds[i] = NULL;
+  }
+  //set of file descriptors to read from
+  fd_set read_fds;
+
+  listen_socket = server_setup();
+
+  printf("Connect to %\n", );
+
+  // start
+  while (!start) {
+    //select() modifies read_fds
+    //we must reset it at each iteration
+    FD_ZERO(&read_fds); //0 out fd set
+    FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
+    FD_SET(listen_socket, &read_fds); //add socket to fd set
+
+    //select will block until either fd is ready
+    select(listen_socket + 1, &read_fds, NULL, NULL, NULL);
+
+    //if listen_socket triggered select
+    if (FD_ISSET(listen_socket, &read_fds)) {
+      client_socket = server_connect(listen_socket);
+      // fill up the players (max 4)
+      if(players < 5){
+        fds[players] = client_socket;
+        players ++;
+      }else{
+        close(client_socket);
+      }
+    }//end listen_socket select
+
+    //if stdin triggered select
+    if (FD_ISSET(STDIN_FILENO, &read_fds)) {
+      //if you don't read from stdin, it will continue to trigger select()
+      fgets(buffer, sizeof(buffer), stdin);
+      if(strcmp(buffer, "start") == 0){
+        start++;
+      }else{
+        printf("[server] Player Count: %d\nEnter 'start' to continue\n", players);
+      }
+    }
+  }
+
+  // start the game
+  while(1){
+    // add all the players to fd set
+    FD_ZERO(&read_fds);
+    for (i = 0; i < players; i++){
+      FD_SET(fds[i] ,&read_fds);
+    }
+
+
+    // last player should have highest fd
+    select(fds[players - 1] + 1, &read_fds, NULL, NULL, NULL);
+
+    // process each player input
+    for(i = 0; i < players; i++){
+      if (FD_ISSET(fds[i], &read_fds)){
+        fgets(buffer, sizeof(buffer), );
+        process(buffer);
+      }
+    }
+  }
+
+}
 
 // helper function for server
 void subserver(int client_socket) {
@@ -65,7 +149,6 @@ void subserver(int client_socket) {
   write(client_socket, buffer, sizeof(buffer));
 
   while (read(client_socket, buffer, sizeof(buffer))) {
-
     printf("[subserver %d] received: [%s]\n", getpid(), buffer);
     process(buffer);
     write(client_socket, buffer, sizeof(buffer));
@@ -73,17 +156,6 @@ void subserver(int client_socket) {
   close(client_socket);
   exit(0);
 }
-
-void process(char * s) {
-  while (*s) {
-    if (*s >= 'a' && *s <= 'z')
-      *s = ((*s - 'a') + 13) % 26 + 'a';
-    else  if (*s >= 'A' && *s <= 'Z')
-      *s = ((*s - 'a') + 13) % 26 + 'a';
-    s++;
-  }
-}
-
 
 
 int main(int argc, char* argv[]){
@@ -96,24 +168,24 @@ int main(int argc, char* argv[]){
 
     // if parent, become server; else become client
     if(fork()){
-
+      server();
     }else{
-      client()
+      client(NULL);
     }
 
-    //waits for the host to start
-
-    //starts game(currently only has cpu players)
-    struct map* m = init_game();
-    int time = 0;
-    while(1){
-      m = update_map(m);
-      display_map(m, time);
-      display_stats(m->players[0]); //that's you
-      time++;
-      usleep(500000);
-    }
-    return 1;
+    // //waits for the host to start
+    //
+    // //starts game(currently only has cpu players)
+    // struct map* m = init_game();
+    // int time = 0;
+    // while(1){
+    //   m = update_map(m);
+    //   display_map(m, time);
+    //   display_stats(m->players[0]); //that's you
+    //   time++;
+    //   usleep(500000);
+    // }
+    // return 1;
   }
   //connect to game with key
   if(strcmp(argv[1], "-c")==0){

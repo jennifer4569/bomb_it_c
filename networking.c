@@ -113,7 +113,7 @@ int client_setup(char * server) {
   sd = socket( AF_INET, SOCK_STREAM, 0 );
   error_check( sd, "client socket" );
 
-  //run getaddrinfo
+  // run getaddrinfo
   /* hints->ai_flags not needed because the client
      specifies the desired address. */
   struct addrinfo * hints, * results;
