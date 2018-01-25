@@ -4,7 +4,28 @@ struct map* update_map(struct map *m){
   
   while(i < m->num_players){
     if(m->players[i]){
-      m->players[i]=go(m->players[i], m, -1);
+      int direction = -1;
+      int key = getch();
+      if(key == 'w' || key == 'W'){
+	direction = UP;
+      }
+      if(key == 'd' || key == 'D'){
+	direction = RIGHT;
+      }
+      if(key == 's' || key == 'S'){
+	direction = DOWN;
+      }
+      if(key == 'a' || key == 'A'){
+	direction = LEFT;
+      }
+      m->players[i]=go(m->players[i], m, direction);
+
+      if(key==' '){
+	m->bombs[m->num_bombs]=drop_bomb(m->players[i]->location[0], m->players[i]->location[1], m->players[i]->bomb_power, m->players[i]);
+	m->players[i]->num_bombs--;
+	m->grid[m->players[i]->location[0]][m->players[i]->location[1]]=BOMB;
+	m->num_bombs++;
+      }
     }
     i++;
   }

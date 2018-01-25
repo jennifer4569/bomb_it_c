@@ -80,59 +80,65 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
 
 
 struct player * go(struct player* p, struct map * m, int move){
-  if(p->is_cpu == -1){
+  /*if(p->is_cpu == -1){
     int key = getch();
     if(key!=ERR){
       int *new_loca = try_move(p->location, DOWN, 1);
       m->grid[new_loca[0]][new_loca[1]]=PLAYER;
-    }
+      }
   }
   else{
     int move = find_best_move(p, m);
-    
-    int *prev_loca=p->location;
-    int *new_loca = try_move(p->location, move, 1);
-    int new_key=m->grid[new_loca[0]][new_loca[1]];
-    int can_move=-1;
+  }*/
 
-    if(new_key==SAFE){
-      can_move=1;
-    }
-    if(new_key==DESTRUCT||new_key==PLAYER){
-      if(p->num_bombs!=0){
-	m->bombs[m->num_bombs]=drop_bomb(prev_loca[0], prev_loca[1], p->bomb_power, p);
-	p->num_bombs--;
-	m->grid[prev_loca[0]][prev_loca[1]]=BOMB;
-	m->num_bombs++;
-      }
-    }
-    if(new_key==POWERUP_ADD_BMB){
-      p->num_bombs++;
-      can_move=1;
-    }
-    if(new_key==POWERUP_BMB_PWR){
-      p->bomb_power++;
-      can_move=1;
-    }
-    if(new_key==POWERUP_ADD_GLV){
-      p->has_gloves=1;
-      can_move=1;
-    }
-    if(can_move==1){
-      if(m->grid[prev_loca[0]][prev_loca[1]]!=BOMB){
-	m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
-      }
-      p->location[0]=new_loca[0];
-      p->location[1]=new_loca[1];
-      m->grid[new_loca[0]][new_loca[1]]=PLAYER;
-    }
-    if(new_key==UNSAFE){
-      m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
-      p=NULL;
-      free(p);
-    }
-    free(new_loca);
+  if(p->is_cpu!=-1){
+    move = find_best_move(p, m);
   }
+  if(p->is_cpu==-1 && move == -1){
+    return p;
+  }
+  int *prev_loca=p->location;
+  int *new_loca = try_move(p->location, move, 1);
+  int new_key=m->grid[new_loca[0]][new_loca[1]];
+  int can_move=-1;
+
+  if(new_key==SAFE){
+    can_move=1;
+  }
+  if(new_key==DESTRUCT||new_key==PLAYER){
+    if(p->is_cpu!=-1 && p->num_bombs!=0){
+      m->bombs[m->num_bombs]=drop_bomb(prev_loca[0], prev_loca[1], p->bomb_power, p);
+      p->num_bombs--;
+      m->grid[prev_loca[0]][prev_loca[1]]=BOMB;
+      m->num_bombs++;
+    }
+  }
+  if(new_key==POWERUP_ADD_BMB){
+    p->num_bombs++;
+    can_move=1;
+  }
+  if(new_key==POWERUP_BMB_PWR){
+    p->bomb_power++;
+    can_move=1;
+  }
+  if(new_key==POWERUP_ADD_GLV){
+    p->has_gloves=1;
+    can_move=1;
+  }
+  if(can_move==1){
+    if(m->grid[prev_loca[0]][prev_loca[1]]!=BOMB){
+      m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
+    }
+    p->location[0]=new_loca[0];
+    p->location[1]=new_loca[1];
+    m->grid[new_loca[0]][new_loca[1]]=PLAYER;
+  }
+  if(new_key==UNSAFE){
+    m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
+    p=NULL;
+    free(p);
+  }
+  free(new_loca);
   return p;
 }
 
