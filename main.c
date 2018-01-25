@@ -1,17 +1,12 @@
 #include "bomb_it.h"
 
-//init_game() initializes the game
-//malloc struct map
-//load in map
-//return map
-
-//NEED TO CHECK FOR CERTAIN CHARACTERS
 struct map * init_game(){
   srand(time(NULL));
   struct map* m = malloc(sizeof(*m));
 
+  //reads the map from a text file, and converts it into a map
   struct stat sb;
-  stat("maps/map0.txt", &sb);
+  stat("maps/map4.txt", &sb);
   
   int fd = open("maps/map4.txt", O_RDONLY);
   char rd_info[sb.st_size];
@@ -25,7 +20,8 @@ struct map * init_game(){
   int num_bombs = 0;
   curr_line = strtok(rd_info, "\n");
   do{
-  y = 0;
+    y = 0;
+    //converts the string to an int
     while(curr_line[y]){
       curr_map_key = curr_line[y] - '0';
       if(curr_map_key == PLAYER){
