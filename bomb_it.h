@@ -12,6 +12,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <ncurses.h>
 
 #ifndef HEADERS
 #define HEADERS
@@ -24,10 +25,7 @@
   ====================================================
 */
 
-// terminal code
-#define CLEAR_SCREEN "\e[1;1H\e[2J"
-
-//  for maps's grid
+//FOR MAP'S GRID
 #define SAFE 0 //if the space is empty and isn't in a bomb's explosion range (when it explodes)
 #define UNSAFE 1 //if the space is empty and is in a bomb's explosion range
 #define DESTRUCT 2 //if the space has an obstacle and if it's bombable
@@ -41,13 +39,13 @@
 #define ROW 20
 #define COL 40
 
-//for computer player
+//FOR PLAYER MOVEMENT
 #define UP 0
 #define RIGHT 1
 #define DOWN 2
 #define LEFT 3
 
-// for networking
+//FOR NETWORKING
 #define BUFFER_SIZE 4096
 #define PORT "9001"
 #define TEST_IP "0.0.0.0"
@@ -60,113 +58,161 @@
   ====================================================
 */
 
-/*
-  DEFAULT VALUES
-  int num_bombs = 1; number of bombs a player can have at once
-  int shield = 0; true -> protected against one death; false -> you lose
-  int bomb_power = 1; how strong your bombs are
-  int has_gloves = 0; true -> can push bombs
-  is_alive: if -1, then not alive, else alive
-  4 default map locations will be specified by map;
-*/
 struct player{
-  int num_bombs;
-  int shield;
-  int bomb_power;
-  int has_gloves;
-  int is_cpu;
-  //struct map* b;
+  int num_bombs; //number of bombs a player can have at once
+  int bomb_power; //how strong a player's bombs are
+  int has_gloves; //if the player has gloves, it can push bombs
+  int is_cpu; //if -1, then the player is a human, else it's a cpu player
 
-  int location[2];
+  int location[2]; //player's location
 };
 
-/*
-  location set by player
-  time = 5; explodes at t = 0
-  power = how far in each direction the explosion goes
-*/
 struct bomb{
-  int location[2];
-  int power;
-  int timer;
-  struct player* p;
+  int location[2]; //bomb's location
+  int power; //how far the bomb's explosion range goes
+  int timer; 
+  struct player* p; //the player that dropped the bomb
 };
 
 struct map{
-  struct player* players[4];
-  //struct player* cpu[4];
-  struct bomb* bombs[20000000];
-  //int ** grid; //int will determine each tile's properties
-  int grid[ROW][COL];
+  struct player* players[4]; //all the players on the map
+  struct bomb* bombs[20000000]; //all the bombs on the map
+  int grid[ROW][COL]; //the grid itself
   int num_players;
-  //int num_cpu;
   int num_bombs;
 };
 
-
-
 /*
   ====================================================
-  PLAYER FUNCTIONS
+  INITIALIZATION FUNCTIONS (see main.c)
   ====================================================
 */
 
-//create_player() takes in its location and is_cpu (-1 if isnt cpu, else it is a cpu)
-//returns newly created player
+
+/*
+  struct map * init_game()
+  initializes the game
+  returns the newly created map
+*/
+struct map * init_game();
+
+/*
+  void windowSetup()
+  sets up the window (for ncurses)
+*/
+void windowSetup();
+
+/*
+  ====================================================
+  PLAYER FUNCTIONS (see bomb_player.c)
+  ====================================================
+*/
+
+
+/*
+  create_player(int is_cpu, int x, int y) 
+  creates a new player based on the given parameters:
+     int is_cpu: -1 if the player is human, else it is a cpu
+     int x: the player's x location
+     int y: the player's y location
+  returns the newly created player
+*/
 struct player* create_player(int is_cpu, int x, int y);
 
-// go() takes in the player, the map, and the player's code for a move
-// move won't be considered if the player is a cpu
-// it will return the player
-struct player * go(struct player*, struct map *, int);
-
-//given the code for the move and the current location, return the new location if the move were to happen
-int * try_move(int * location, int move, int move_pwr);
-
-// drop_bomb() takes in a location and its power (player->location, player->bomb_power)
-// creates the bomb and returns the newly created bomb
+/*
+  struct bomb* drop_bomb(int x, int y, int power, struct player* p)
+  creates a new bomb based on the given parameters:
+     int x: the bomb's x location
+     int y: the bomb's y location
+     int power: the bomb's power
+     struct player *p: the player that dropped the bomb
+  returns the newly created bomb
+*/
 struct bomb* drop_bomb(int x, int y, int power, struct player* p);
 
-//tick_bomb() takes in the bomb, if timer = 0, then explode
+/*
+  struct bomb* tick_bomb(struct bomb* b, struct map*m)
+  the bomb's version of go(): every frame, it updates the bomb's timer, and explodes it when time is up
+     struct player *b: the bomb that's being ticked
+     struct map *m: the map
+  returns the updated bomb
+*/
 struct bomb* tick_bomb(struct bomb* b, struct map*m);
 
-//for cpu player, used for the cpu to find the best move for itself
+/*
+  struct player * go(struct player* p, struct map * m, int move)
+  every frame, it updates the player's movement
+     struct player *p: -1 if the player is human, else it is a cpu
+           if the player is a human, then it will take in the move that was given, and move the player
+	   else, the cpu will use its own judgement to move to another location
+     struct map *m: the map
+     int move: the direction that the player is going (only considered if the player is a human)
+  returns the updated player
+*/
+struct player * go(struct player* p, struct map * m, int move);
+
+/*
+  int find_best_move(struct player* p, struct map* m)
+  the cpu's judgement of which direction it should go to
+     struct player *p: the cpu player
+     struct map *m: the map
+  returns the direction that the cpu believes it should go to
+*/
 int find_best_move(struct player* p, struct map* m);
+
+/*
+  int * try_move(int * location, int move, int move_pwr)
+  using the given parameters:
+     int * location: the old location
+     int move: the direction of the move
+     int move_pwr: how many spaces to the given direction it goes into
+  returns the new location (not taking to account the map and obstacles)
+*/
+int * try_move(int * location, int move, int move_pwr);
+
 
 
 
 /*
   ====================================================
-  MAP FUNCTIONS
+  MAP AND FRONT END FUNCTIONS (see front_end.c)
   ====================================================
 */
 
-//update_map() takes in the map, updates it, then returns the newly updated map
-//calls key_intercept()
-//ticks every bomb's timer by 1
-//if timer == 0, update spaces to be in explosion range, and the bomb will no longer show on the map
-//if timer == -5, update spaces to be safe, then free() the bomb
-//checks for the following:
-//    if player is on the explosion range, it will lose health
-//    if destructable obstacle is on the explosion range, it will be destroyed, with a chance of dropping a powerup
-//    if powerup is on the explosion range, it will be destroyed
-//    if bomb is on the explosion range, it will also explode
-struct map* update_map(struct map*);
+/*
+  struct map* update_map(struct map* m)
+  updates the map every tick
+     struct map *m: the map
+  returns the newly updated map
+*/
+struct map* update_map(struct map* m);
 
-
-// display_map() takes in the map, and displays it
-void display_map(struct map* m, int time);
-
-//display_stats() takes in the player, and displays its stats
-void display_stats(struct player*p);
-
-//print_map() takes one grid tile's int value at a time, and prints that out as a char
-//if colorize is -1, then the printing will not be colorized
-//else, it will be
+/*
+  void print_map(int curr, int colorize, int time, int player_num)
+  prints the map one character at a time, with proper coloring
+     int curr: the key code of the current space
+     int colorize: if colorize is -1, then the printing will not be colorized; else, it will
+     int time: the time
+     int player_num: what number player the current space is; -1 if the space isn't a player
+*/
 void print_map(int curr, int colorize, int time, int player_num);
 
-//key_intercept() takes in the map, updates it based on keyboard commands, then returns the new map
-struct map* key_intercept(struct map*);
+// display_map() takes in the map, and displays it
+/*
+  void display_map(struct map* m, int time)
+  displays the entire map
+     struct map *m: the map
+     int time: the time
+*/
+void display_map(struct map* m, int time);
+
+/*
+  void display_stats(struct player*p, int colorize)
+  displays the player's stats
+     struct map *p: the player
+     int colorize: if colorize is -1, then the printing will not be colorized; else, it will
+*/
+void display_stats(struct player*p, int colorize);
 
 
 
@@ -181,5 +227,7 @@ void error_check(int i, char *s);
 int server_setup();
 int server_connect(int sd);
 int client_setup(char * server);
+
+
 
 #endif

@@ -1,17 +1,12 @@
 #include "bomb_it.h"
 
-//init_game() initializes the game
-//malloc struct map
-//load in map
-//return map
-
-//NEED TO CHECK FOR CERTAIN CHARACTERS
 struct map * init_game(){
   srand(time(NULL));
   struct map* m = malloc(sizeof(*m));
 
+  //reads the map from a text file, and converts it into a map
   struct stat sb;
-  stat("maps/map0.txt", &sb);
+  stat("maps/map4.txt", &sb);
   
   int fd = open("maps/map4.txt", O_RDONLY);
   char rd_info[sb.st_size];
@@ -25,12 +20,18 @@ struct map * init_game(){
   int num_bombs = 0;
   curr_line = strtok(rd_info, "\n");
   do{
-  y = 0;
+    y = 0;
+    //converts the string to an int
     while(curr_line[y]){
       curr_map_key = curr_line[y] - '0';
       if(curr_map_key == PLAYER){
-	m->players[num_players]=create_player(1, x, y);
-	num_players++;
+	if(num_players==0){
+	  m->players[num_players]=create_player(-1, x, y);
+	}
+	else{
+	  m->players[num_players]=create_player(1, x, y);
+
+	}num_players++;
       }
       m->grid[x][y]=curr_map_key;
       y++;
@@ -43,25 +44,52 @@ struct map * init_game(){
   return m;
 }
 
+void windowSetup(){
+  initscr(); //initialize the window
+  noecho(); //don't echo any keypresses
+  curs_set(FALSE); //don't display a cursor
+  cbreak();
+
+  nodelay(stdscr, TRUE);//makes getch() work in a nonblocking manner
+  //getch() returns ERR if key input is not read
+}
+
 int main(int argc, char* argv[]){
   if(!argv[1]){
-    printf("There is no argument!\n");
+
+    printf("\n\n\nThere is no argument!");
+    struct stat sb;
+    stat("instructions.txt", &sb);
+    
+    int fd = open("instructions.txt", O_RDONLY);
+    char rules[sb.st_size];
+    read(fd, rules, sb.st_size);
+    
+    printf("%s", rules);
+    
+   
     return -1;
   }
   //host a game
   if(strcmp(argv[1], "-h")==0){
     //waits for the host to start
 
-    //starts game(currently only has cpu players)
+
+    
+    //starts game
+    windowSetup();
     struct map* m = init_game();
     int time = 0;
     while(1){  
       m = update_map(m);
       display_map(m, time);
-      display_stats(m->players[0]); //that's you
+      display_stats(m->players[0], -1); //that's you
       time++;
+      refresh();
       usleep(500000);
+      
     }
+    endwin();
     return 1;
   }
   //connect to game with key
@@ -89,6 +117,17 @@ int main(int argc, char* argv[]){
     
     return 1;
   }
-  printf("Arguments are incorrect. Try again.\n");
+  printf("\n\n\nArguments are incorrect. Try again.");
+  
+  struct stat sb;
+  stat("instructions.txt", &sb);
+    
+  int fd = open("instructions.txt", O_RDONLY);
+  char rules[sb.st_size];
+  read(fd, rules, sb.st_size);
+    
+  printf("%s", rules);
+    
+   
   return -1;
 }
