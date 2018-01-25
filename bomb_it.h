@@ -50,7 +50,7 @@
 // for networking
 #define BUFFER_SIZE 4096
 #define PORT "0"
-#define TEST_IP "127.0.0.1"
+#define TEST_IP "0.0.0.0"
 
 
 

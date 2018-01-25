@@ -117,6 +117,9 @@ int server(){
     }
   }
 
+
+
+
   // start the game
   while(1){
     // add all the players to fd set
@@ -170,6 +173,7 @@ int main(int argc, char* argv[]){
     if(fork()){
       server();
     }else{
+      sleep(1);
       client(NULL);
     }
 
