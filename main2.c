@@ -3,7 +3,7 @@
   temporary testing main for networking functions
 */
 
-client(char * server){
+int client(char * server){
   int server_socket;
   char buffer[BUFFER_SIZE];
 
@@ -62,7 +62,7 @@ void process(char * s) {
 
 
 
-server(){
+int server(){
   int listen_socket;
   int client_socket;
   int i;
@@ -72,15 +72,15 @@ server(){
   int fds[4];
 
   // zero out fds list
-  for(i = 0; i < fds.length; i ++){
-    fds[i] = NULL;
+  for(i = 0; i < 5; i ++){
+    fds[i] = 0;
   }
   //set of file descriptors to read from
   fd_set read_fds;
 
   listen_socket = server_setup();
 
-  printf("Connect to %\n", );
+  printf("In order for others to connect to this game, open another terminal give them the output to the following command:\nhostname -I\n");
 
   // start
   while (!start) {
