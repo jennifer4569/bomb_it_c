@@ -14,16 +14,16 @@ struct map* update_map(struct map *m){
       int key = getch();
       //movement
       if(key == 'w' || key == 'W'){
-	direction = UP;
+      	direction = UP;
       }
       if(key == 'd' || key == 'D'){
-	direction = RIGHT;
+      	direction = RIGHT;
       }
       if(key == 's' || key == 'S'){
-	direction = DOWN;
+      	direction = DOWN;
       }
       if(key == 'a' || key == 'A'){
-	direction = LEFT;
+      	direction = LEFT;
       }
       //drops a bomb if the player is a human and has available bombs
       if(key==' ' && m->players[i]->is_cpu == -1 && m->players[i]->num_bombs!=0){
@@ -64,7 +64,7 @@ struct map* update_map(struct map *m){
     //drops one of the 3 powerups randomly
     m->grid[rand_row][rand_col] = rand() % 3 + POWERUP_ADD_BMB;
   }
-  
+
   return m;
 }
 
