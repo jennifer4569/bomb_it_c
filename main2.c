@@ -132,7 +132,7 @@ int server(){
     // process each player input
     for(i = 0; i < players; i++){
       if (FD_ISSET(fds[i], &read_fds)){
-        read(buffer, sizeof(buffer), fds[i]);
+        read(fds[i], buffer, sizeof(buffer));
         process(buffer);
       }
     }
