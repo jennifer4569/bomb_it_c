@@ -160,19 +160,38 @@ void display_map(struct map * m, int time){
   }
 }
 
-void display_stats(struct player*p){
-  printf("\n\n");
-  if(p){
-    printw("\033[0;92mPlayer's num bombs:  \t%d\n", p->num_bombs);
-    printw("\033[0;95mPlayer's bomb power: \t%d\n\n", p->bomb_power);
-    if(p->has_gloves == -1){
-      printw("\033[0;96mPlayer \033[4;96mdoesn't\033[0;96m have gloves\n");
+void display_stats(struct player*p, int colorize){
+  if(colorize == -1){
+
+    printf("\n\n");
+    if(p){
+      printw("Player's num bombs:  \t%d\n", p->num_bombs);
+      printw("Player's bomb power: \t%d\n\n", p->bomb_power);
+      if(p->has_gloves == -1){
+	printw("Player doesn't have gloves\n");
+      }
+      else{
+	printw("Player does    have gloves\n");
+      }
     }
     else{
-      printw("\033[0;96mPlayer \033[4;96mdoes\033[0;96m    have gloves\n");
+      printw("YOU HAVE DIED!\n");
     }
   }
   else{
-    printw("\033[0;91mYOU HAVE DIED!\n");
+    printw("\n\n");
+    if(p){
+      printw("\033[0;92mPlayer's num bombs:  \t%d\n", p->num_bombs);
+      printw("\033[0;95mPlayer's bomb power: \t%d\n\n", p->bomb_power);
+      if(p->has_gloves == -1){
+	printw("\033[0;96mPlayer \033[4;96mdoesn't\033[0;96m have gloves\n");
+      }
+      else{
+	printw("\033[0;96mPlayer \033[4;96mdoes\033[0;96m    have gloves\n");
+      }
+    }
+    else{
+      printw("\033[0;91mYOU HAVE DIED!\n");
+    }
   }
 }

@@ -25,7 +25,9 @@ OBSTACLES OVERCOME
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Since the bomb explosion time is so short, the players sometimes step on the explosion range at the right time so that they seemingly die, but they don't.
+- Bomb explosion doesn't always kill players
+  - Since the bomb explosion time is so short, the players sometimes step on the explosion range at the right time so that they seemingly die, but they don't.
+  - There are other undetected reasons, as a player that doesn't move and is on a bomb explosion space doesn't die...
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

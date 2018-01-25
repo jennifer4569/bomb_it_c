@@ -57,6 +57,7 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
 	  while(k < m->num_players){
 	    if(m->players[k]){
 	      if(m->players[k]->location[0]==temp[0]&&m->players[k]->location[1]==temp[1]){
+		m->grid[temp[0]][temp[1]]= bmb_code;
 		m->players[k]=NULL;
 		free(m->players[k]);
 

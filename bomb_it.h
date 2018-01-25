@@ -159,7 +159,7 @@ struct map* update_map(struct map*);
 void display_map(struct map* m, int time);
 
 //display_stats() takes in the player, and displays its stats
-void display_stats(struct player*p);
+void display_stats(struct player*p, int colorize);
 
 //print_map() takes one grid tile's int value at a time, and prints that out as a char
 //if colorize is -1, then the printing will not be colorized
