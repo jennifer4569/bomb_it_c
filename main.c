@@ -29,8 +29,13 @@ struct map * init_game(){
     while(curr_line[y]){
       curr_map_key = curr_line[y] - '0';
       if(curr_map_key == PLAYER){
-	m->players[num_players]=create_player(1, x, y);
-	num_players++;
+	if(num_players==0){
+	  m->players[num_players]=create_player(-1, x, y);
+	}
+	else{
+	  m->players[num_players]=create_player(1, x, y);
+
+	}num_players++;
       }
       m->grid[x][y]=curr_map_key;
       y++;
@@ -43,6 +48,16 @@ struct map * init_game(){
   return m;
 }
 
+void windowSetup(){
+  initscr(); //initialize the window
+  noecho(); //don't echo any keypresses
+  curs_set(FALSE); //don't display a cursor
+  cbreak();
+
+  nodelay(stdscr, TRUE);//makes getch() work in a nonblocking manner
+  //getch() returns ERR if key input is not read
+}
+
 int main(int argc, char* argv[]){
   if(!argv[1]){
     printf("There is no argument!\n");
@@ -53,14 +68,17 @@ int main(int argc, char* argv[]){
     //waits for the host to start
 
     //starts game(currently only has cpu players)
+    windowSetup();
     struct map* m = init_game();
     int time = 0;
     while(1){  
       m = update_map(m);
       display_map(m, time);
-      display_stats(m->players[0]); //that's you
+      //display_stats(m->players[0]); //that's you
       time++;
+      refresh();
       usleep(500000);
+      
     }
     return 1;
   }

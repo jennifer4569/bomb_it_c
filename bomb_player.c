@@ -81,7 +81,11 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
 
 struct player * go(struct player* p, struct map * m, int move){
   if(p->is_cpu == -1){
-    
+    int key = getch();
+    if(key!=ERR){
+      int *new_loca = try_move(p->location, DOWN, 1);
+      m->grid[new_loca[0]][new_loca[1]]=PLAYER;
+    }
   }
   else{
     int move = find_best_move(p, m);

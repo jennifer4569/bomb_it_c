@@ -103,14 +103,15 @@ void print_map(int curr, int colorize, int time, int player_num){
 
 
   if(colorize == -1){
-    printf("%c", c);
+    printw("%c", c);
   }
   else{
-    printf("\033[%d;%d;%dm%c", format, foreground, background, c);
+    printw("\033[%d;%d;%dm%c", format, foreground, background, c);
   }
 }
 void display_map(struct map * m, int time){
-  printf("%s", CLEAR_SCREEN); //clears screen
+  //printw("%s", CLEAR_SCREEN); //clears screen
+  clear();
   int i = 0;
   int j = 0;
   while(i < ROW){
@@ -121,35 +122,36 @@ void display_map(struct map * m, int time){
 	while(k < 4){
 	  if(m->players[k]){
 	    if(m->players[k]->location[0]==i && m->players[k]->location[1]==j){
-	    print_map(m->grid[i][j], 1, time, k);
+	    print_map(m->grid[i][j], -1, time, k);
 	    }
 	  }
 	  k++;
 	}
       }
       else{
-	print_map(m->grid[i][j], 1, time, -1);
+	print_map(m->grid[i][j], -1, time, -1);
       }
       j++;
     }
     i++;
-    printf("\033[0;%d;%dm\n", 39, 40); //makes new line and clear screen not make the entire screen white
+    printw("\n");
+    //printw("\033[0;%d;%dm\n", 39, 40); //makes new line and clear screen not make the entire screen white
   }
 }
 
 void display_stats(struct player*p){
   printf("\n\n");
   if(p){
-    printf("\033[0;92mPlayer's num bombs:  \t%d\n", p->num_bombs);
-    printf("\033[0;95mPlayer's bomb power: \t%d\n\n", p->bomb_power);
+    printw("\033[0;92mPlayer's num bombs:  \t%d\n", p->num_bombs);
+    printw("\033[0;95mPlayer's bomb power: \t%d\n\n", p->bomb_power);
     if(p->has_gloves == -1){
-      printf("\033[0;96mPlayer \033[4;96mdoesn't\033[0;96m have gloves\n");
+      printw("\033[0;96mPlayer \033[4;96mdoesn't\033[0;96m have gloves\n");
     }
     else{
-      printf("\033[0;96mPlayer \033[4;96mdoes\033[0;96m    have gloves\n");
+      printw("\033[0;96mPlayer \033[4;96mdoes\033[0;96m    have gloves\n");
     }
   }
   else{
-    printf("\033[0;91mYOU HAVE DIED!\n");
+    printw("\033[0;91mYOU HAVE DIED!\n");
   }
 }

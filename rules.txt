@@ -1,0 +1,37 @@
+
+
+RULES:
+	Controls:
+	
+		WASD: Move your character
+		
+    		Spacebar: Drop bomb/Use powerup (if there is one)
+		
+	How to play:
+	
+	        The goal of the game is to be the last one standing.
+		
+		Move around and kill other players by bombing them.
+		
+		There will be obstacles in the way, some bombable,
+		and others indestructable.
+		
+		Powerups will appear randomly on the map. Step on them
+		to get the powerup.
+		
+	Ascii Representations:
+	
+		P: Player (Different Colors)
+		O: Bomb
+		#: Bomb explosion range (solid red)
+		#: Indestructable obstacle (solid white)
+		#: Bombable obstacle (white)
+		
+		Powerups:
+			+: Increase maximum bomb's limit
+			*: Increase bomb power (increasing its explosion range)
+			m: Add gloves (for the rest of the game, you can push
+			   bombs around -- while in mid-push, the bomb's timer
+			   is frozen.)
+
+

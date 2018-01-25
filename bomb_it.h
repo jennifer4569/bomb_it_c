@@ -12,6 +12,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <ncurses.h>
 
 #ifndef HEADERS
 #define HEADERS
