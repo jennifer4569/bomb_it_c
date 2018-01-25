@@ -90,8 +90,10 @@ int server(){
     FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
     FD_SET(listen_socket, &read_fds); //add socket to fd set
 
+    printf("asdfasdfasdf");
     //select will block until either fd is ready
     select(listen_socket + 1, &read_fds, NULL, NULL, NULL);
+    printf("asdfasdfasdf");
 
     //if listen_socket triggered select
     if (FD_ISSET(listen_socket, &read_fds)) {
