@@ -79,3 +79,8 @@ jenniferZ -- 2018-01-14 01:23 PM
     - Powerups blink
 - Modified map reading implementation
   - Now the .txt files containing the maps are filled with their corresponding map keys
+
+charlesW -- 2018-01-25 08:50 AM
+-------------------------------
+-Revised function descriptions in header file
+-Added networking function headers to header file

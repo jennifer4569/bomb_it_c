@@ -7,15 +7,27 @@
 #include <errno.h>
 #include <unistd.h>
 #include <time.h>
+#include <netdb.h>
+#include <errno.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 #ifndef HEADERS
 #define HEADERS
 
-//terminal codes
+
+
+/*
+  ====================================================
+  DEFINED VARIABLES
+  ====================================================
+*/
+
+// terminal code
 #define CLEAR_SCREEN "\e[1;1H\e[2J"
 
-
-//used for maps's grid
+//  for maps's grid
 #define SAFE 0 //if the space is empty and isn't in a bomb's explosion range (when it explodes)
 #define UNSAFE 1 //if the space is empty and is in a bomb's explosion range
 #define DESTRUCT 2 //if the space has an obstacle and if it's bombable
@@ -35,6 +47,18 @@
 #define DOWN 2
 #define LEFT 3
 
+// for networking
+#define BUFFER_SIZE 256
+#define PORT "9001"
+#define TEST_IP "127.0.0.1"
+
+
+
+/*
+  ====================================================
+  STRUCTS USED
+  ====================================================
+*/
 
 /*
   DEFAULT VALUES
@@ -52,7 +76,7 @@ struct player{
   int has_gloves;
   int is_cpu;
   //struct map* b;
-  
+
   int location[2];
 };
 
@@ -78,6 +102,14 @@ struct map{
   int num_bombs;
 };
 
+
+
+/*
+  ====================================================
+  PLAYER FUNCTIONS
+  ====================================================
+*/
+
 //create_player() takes in its location and is_cpu (-1 if isnt cpu, else it is a cpu)
 //returns newly created player
 struct player* create_player(int is_cpu, int x, int y);
@@ -86,9 +118,6 @@ struct player* create_player(int is_cpu, int x, int y);
 // move won't be considered if the player is a cpu
 // it will return the player
 struct player * go(struct player*, struct map *, int);
-
-//for cpu player, used for the cpu to find the best move for itself
-int find_best_move(struct player* p, struct map* m);
 
 //given the code for the move and the current location, return the new location if the move were to happen
 int * try_move(int * location, int move, int move_pwr);
@@ -100,6 +129,16 @@ struct bomb* drop_bomb(int x, int y, int power);
 //tick_bomb() takes in the bomb, if timer = 0, then explode
 struct bomb* tick_bomb(struct bomb* b, struct map*m);
 
+//for cpu player, used for the cpu to find the best move for itself
+int find_best_move(struct player* p, struct map* m);
+
+
+
+/*
+  ====================================================
+  MAP FUNCTIONS
+  ====================================================
+*/
 
 //update_map() takes in the map, updates it, then returns the newly updated map
 //calls key_intercept()
@@ -127,5 +166,19 @@ void print_map(int curr, int colorize, int time);
 
 //key_intercept() takes in the map, updates it based on keyboard commands, then returns the new map
 struct map* key_intercept(struct map*);
+
+
+
+/*
+  ====================================================
+  NETWORKING FUNCTIONS
+  ====================================================
+*/
+
+// functions from dwsource
+void error_check(int i, char *s);
+int server_setup();
+int server_connect(int sd);
+int client_setup(char * server);
 
 #endif
