@@ -89,6 +89,7 @@ struct bomb{
   int location[2];
   int power;
   int timer;
+  struct player* p;
 };
 
 struct map{
@@ -124,7 +125,7 @@ int * try_move(int * location, int move, int move_pwr);
 
 // drop_bomb() takes in a location and its power (player->location, player->bomb_power)
 // creates the bomb and returns the newly created bomb
-struct bomb* drop_bomb(int x, int y, int power);
+struct bomb* drop_bomb(int x, int y, int power, struct player* p);
 
 //tick_bomb() takes in the bomb, if timer = 0, then explode
 struct bomb* tick_bomb(struct bomb* b, struct map*m);
@@ -162,7 +163,7 @@ void display_stats(struct player*p);
 //print_map() takes one grid tile's int value at a time, and prints that out as a char
 //if colorize is -1, then the printing will not be colorized
 //else, it will be
-void print_map(int curr, int colorize, int time);
+void print_map(int curr, int colorize, int time, int player_num);
 
 //key_intercept() takes in the map, updates it based on keyboard commands, then returns the new map
 struct map* key_intercept(struct map*);
