@@ -96,6 +96,7 @@ int server(){
     //if listen_socket triggered select
     if (FD_ISSET(listen_socket, &read_fds)) {
       client_socket = server_connect(listen_socket);
+      printf("reeeeeeeeeeeeeeeeeeeeeeeeeeee");
       // fill up the players (max 4)
       if(players < 5){
         fds[players] = client_socket;
