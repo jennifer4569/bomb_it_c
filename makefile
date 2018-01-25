@@ -27,6 +27,3 @@ connect: all
 
 rules: all
 	./bomb_it.exe -r
-
-maps: all
-	./bomb_it.exe -m

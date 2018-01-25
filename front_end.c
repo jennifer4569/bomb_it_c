@@ -32,7 +32,7 @@ struct map* update_map(struct map *m){
 
 }
 
-void print_map(int curr, int colorize, int time){
+void print_map(int curr, int colorize, int time, int player_num){
   int format=0;//default
   int foreground=232; //white
   //int background=40; //black
@@ -54,7 +54,19 @@ void print_map(int curr, int colorize, int time){
     c = '#';
   }
   if(curr == PLAYER){
-    foreground = 33; //yellow
+    if(player_num==0){
+      foreground=33;
+    }
+    if(player_num==1){
+      foreground=32;
+    }
+    if(player_num==2){
+      foreground=34;
+    }
+    if(player_num==3){
+      foreground=35;
+    }
+    format = 1;
     c = 'P';
   }
   if(curr==BOMB){
@@ -104,7 +116,20 @@ void display_map(struct map * m, int time){
   while(i < ROW){
     j = 0;
     while(j < COL){
-      print_map(m->grid[i][j], 1, time);
+      if(m->grid[i][j]==PLAYER){
+	int k = 0;
+	while(k < 4){
+	  if(m->players[k]){
+	    if(m->players[k]->location[0]==i && m->players[k]->location[1]==j){
+	    print_map(m->grid[i][j], 1, time, k);
+	    }
+	  }
+	  k++;
+	}
+      }
+      else{
+	print_map(m->grid[i][j], 1, time, -1);
+      }
       j++;
     }
     i++;

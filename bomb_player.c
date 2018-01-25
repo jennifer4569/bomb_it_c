@@ -13,13 +13,14 @@ struct player* create_player(int is_cpu, int x, int y){
   return p;
 }
 
-struct bomb* drop_bomb(int x, int y, int power){
+struct bomb* drop_bomb(int x, int y, int power, struct player* p){
   struct bomb* b;
   b = (struct bomb*)malloc(sizeof(b));
   b->location[0] = x;
   b->location[1]=y;
   b->power=power;
   b->timer=8;
+  b->p=p;
   return b;
 }
 struct bomb* tick_bomb(struct bomb* b, struct map*m){
@@ -27,6 +28,7 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
   int bmb_code;
   if(b->timer==0){
     bmb_code=UNSAFE;
+    b->p->num_bombs++;
   }
   if(b->timer==-1){
     bmb_code=SAFE;
@@ -48,9 +50,7 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
 	int * temp= try_move(b->location, j, i);
 	int curr_code=m->grid[temp[0]][temp[1]];
     	if(curr_code==INDESTRUCT){
-	  //free(temp);
-	  break;
-
+	  i = check + 5;
 	}
 	if(curr_code==PLAYER){
 	  int k = 0;
@@ -59,32 +59,16 @@ struct bomb* tick_bomb(struct bomb* b, struct map*m){
 	      if(m->players[k]->location[0]==temp[0]&&m->players[k]->location[1]==temp[1]){
 		m->players[k]=NULL;
 		free(m->players[k]);
-		//free(temp);
-		break;
+
+		i = check + 5;
 	      }
 	    }
 	    k++;
 	  }
-	}/*
-	if(curr_code==DESTRUCT){
-	  int rand_num = rand() % 10;
-	  if(rand_num==0){
-	    bmb_code=POWERUP_ADD_BMB;
-	  }
-	  if(rand_num==1){
-	    bmb_code=POWERUP_BMB_PWR;
-	  }
-	  if(rand_num==2){
-	    bmb_code=POWERUP_ADD_GLV;
-	  }
-	  m->grid[temp[0]][temp[1]]=bmb_code;
-	  break;
 	}
-	if(curr_code==POWERUP_ADD_BMB||curr_code==POWERUP_BMB_PWR||curr_code==POWERUP_ADD_GLV){
-	  bmb_code=curr_code;
-	  }*/
-	m->grid[temp[0]][temp[1]]=bmb_code;
-	
+	if(i != check + 5){
+	  m->grid[temp[0]][temp[1]]=bmb_code;
+	}
 	free(temp);
     	i++;
       }
@@ -106,12 +90,17 @@ struct player * go(struct player* p, struct map * m, int move){
     int *new_loca = try_move(p->location, move, 1);
     int new_key=m->grid[new_loca[0]][new_loca[1]];
     int can_move=-1;
+
     if(new_key==SAFE){
       can_move=1;
     }
-    if(new_key==INDESTRUCT||new_key==PLAYER){
-      m->bombs[m->num_bombs]=drop_bomb(prev_loca[0], prev_loca[1], p->bomb_power);
-      m->num_bombs++;
+    if(new_key==DESTRUCT||new_key==PLAYER){
+      if(p->num_bombs!=0){
+	m->bombs[m->num_bombs]=drop_bomb(prev_loca[0], prev_loca[1], p->bomb_power, p);
+	p->num_bombs--;
+	m->grid[prev_loca[0]][prev_loca[1]]=BOMB;
+	m->num_bombs++;
+      }
     }
     if(new_key==POWERUP_ADD_BMB){
       p->num_bombs++;
@@ -126,7 +115,9 @@ struct player * go(struct player* p, struct map * m, int move){
       can_move=1;
     }
     if(can_move==1){
-      m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
+      if(m->grid[prev_loca[0]][prev_loca[1]]!=BOMB){
+	m->grid[prev_loca[0]][prev_loca[1]]=SAFE;
+      }
       p->location[0]=new_loca[0];
       p->location[1]=new_loca[1];
       m->grid[new_loca[0]][new_loca[1]]=PLAYER;

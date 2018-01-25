@@ -17,6 +17,30 @@ Format (APPEND TO END)
 firstL -- TIMESTAMP
 **********<>***********
 
+/////////// Zone of Reflection \\\\\\\\\\\
+------------------------------------------
+OBSTACLES OVERCOME
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+UNRESOLVED ISSUES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Since the bomb explosion time is so short, the players sometimes step on the explosion range at the right time so that they seemingly die, but they don't.
+
+COOL STUFF LEARNED
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+MID-DEVELOPMENT DESIGN CHANGES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+LESSONS LEARNED
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+||||||||||||||||||||||||||||||||||||||||||
+
+
 ============================================================
 
 connieL, charlesW, jenniferZ -- 2017-12-22 11:02 AM
