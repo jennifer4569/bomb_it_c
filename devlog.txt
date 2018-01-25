@@ -79,8 +79,36 @@ jenniferZ -- 2018-01-14 01:23 PM
     - Powerups blink
 - Modified map reading implementation
   - Now the .txt files containing the maps are filled with their corresponding map keys
+- Stats now display below the map
+
+jenniferZ -- 2018-01-15 11:01 AM
+-------------------------------
+- Made map background dark gray
+- Added new map
+
+jenniferZ -- 2018-01-16 11:01 AM
+-------------------------------
+- Added bomb features: explosion
+- Started on powerup features: players can pick up powerups, but powerups do not drop properly
+
+jenniferZ -- 2018-01-17 11:01 AM
+-------------------------------
+- Started on CPU movement
+
+jenniferZ -- 2018-01-18 11:01 AM
+-------------------------------
+- Worked on CPU movement: Bugs when it tries to drop a bomb
+
+jenniferZ -- 2018-01-19 11:01 AM
+-------------------------------
+- Modified the way powerups appear, now it powerup works
 
 charlesW -- 2018-01-25 08:50 AM
 -------------------------------
--Revised function descriptions in header file
--Added networking function headers to header file
+- Revised function descriptions in header file
+- Added networking function headers to header file
+
+jenniferZ -- 2018-01-25 09:42 AM
+-------------------------------
+- Fixed CPU movement so that the direction it chooses to go to is more random
+- Make rules will display the rules now

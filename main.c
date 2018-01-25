@@ -87,11 +87,19 @@ int main(int argc, char* argv[]){
   //rules of the game
   if(strcmp(argv[1], "-r")==0){
 
+    struct stat sb;
+    stat("rules.txt", &sb);
+    
+    int fd = open("rules.txt", O_RDONLY);
+    char rules[sb.st_size];
+    read(fd, rules, sb.st_size);
+    
+    printf("%s", rules);
+    
     return 1;
   }
   //list maps
   if(strcmp(argv[1], "-m")==0){
-    
     return 1;
   }
   printf("Arguments are incorrect. Try again.\n");
