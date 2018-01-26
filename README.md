@@ -54,9 +54,9 @@ From here, there are several options for the commands you can use:
 **Ascii Representations:**
 * *P* : Player (Different Colors)
 * *O* : Bomb
-* *#* : Bomb explosion range (solid red)
-* *#* : Indestructable obstacle (solid white)
-* *#* : Bombable obstacle (white)
+* *-* : Bomb explosion range
+* *#* : Indestructable obstacle
+* *=* : Bombable obstacle
 
 * **Powerups:**
   * *+* : Increase maximum bomb's limit

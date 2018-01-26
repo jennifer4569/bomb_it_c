@@ -21,11 +21,11 @@ RULES:
 		
 	Ascii Representations:
 	
-		P: Player (Different Colors)
+		P: Player
 		O: Bomb
-		#: Bomb explosion range (solid red)
-		#: Indestructable obstacle (solid white)
-		#: Bombable obstacle (white)
+		-: Bomb explosion range
+		#: Indestructable obstacle
+		=: Bombable obstacle
 		
 		Powerups:
 			+: Increase maximum bomb's limit
