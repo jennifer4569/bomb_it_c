@@ -37,7 +37,7 @@ MID-DEVELOPMENT DESIGN CHANGES
 - Didn't implement creating/selecting maps
 - Didn't implement glove powerup features
 - Changed the way powerups were dropped (now it has a 4% chance of appearing on a SAFE space)
-- Didn't implement multiplayer features
+- Didn't fully implement multiplayer features
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,6 +157,12 @@ jenniferZ -- 2018-01-25 04:42 PM
 - Removed coloring features
   - Updated rules to the current ascii values
 
+
+charlesW -- 2018-01-25 04:45 PM
+------------------------------
+- got basic networking working
+  - can connect up to 4 people, but game isn't implememnted
+
 connieL -- 2018-01-25 10:11 PM
 -------------------------------
 - Ncurses skelly for network client integration
@@ -176,11 +182,15 @@ jenniferZ -- 2018-01-25 11:36 PM
   - Unresolved issues
   - Mid-developmental design changes
   - Lessons learned
-  
+
+charlesW -- 2018-01-26 12:32 AM
+-------------------------------
+- added some comments on functions
+
 connieL -- 2018-01-26 1:02 AM
 -------------------------------
 - Added server function to stringify map that will be sent to clients
-  
+
 jenniferZ -- 2018-01-26 8:15 AM
 -------------------------------
 - Updated README.md, devlog.txt, instructions.txt, and makefile to work with the current state of our code
