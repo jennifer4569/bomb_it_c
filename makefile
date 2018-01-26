@@ -27,9 +27,3 @@ single: all
 
 rules: all
 	./bomb_it.exe -r
-
-multiplayer: main.o front_end.o bomb_player.o
-	gcc -o bomb_it.exe main.o front_end.o bomb_player.o -lcurses
-
-test: all
-	gcc -o testS networking.c bomb_it.h main2.c

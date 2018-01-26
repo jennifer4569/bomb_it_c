@@ -27,7 +27,8 @@ UNRESOLVED ISSUES
 - Bomb explosion range glitches out
   - Doesn't always go through all directions
 - Keyboard interception puts each key into a queue: So if you spam a button too much, you have to wait a long time before you can move to a different direction again
-- Trying to connect with more than four players bugs out the player's terminal
+- Tried implimenting multiplayer features, but we never got networking to work
+  - Trying to connect with more than four players bugs out the player's terminal
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,10 +37,12 @@ MID-DEVELOPMENT DESIGN CHANGES
 - Didn't implement creating/selecting maps
 - Didn't implement glove powerup features
 - Changed the way powerups were dropped (now it has a 4% chance of appearing on a SAFE space)
+- Didn't implement multiplayer features
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - ncurses doesn't let you hardcode terminal coloring
+- Networking is hard
 
 ------------------------------------------
 \\\\\\\\\\\\\\\\\\\\\|////////////////////
@@ -178,3 +181,6 @@ connieL -- 2018-01-26 1:02 AM
 -------------------------------
 - Added server function to stringify map that will be sent to clients
   
+jenniferZ -- 2018-01-26 8:15 AM
+-------------------------------
+- Updated README.md, devlog.txt, instructions.txt, and makefile to work with the current state of our code

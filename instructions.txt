@@ -2,16 +2,19 @@
 
 
       Try:
+      
 	   make single: start a single player game
-	   make multiplayer: sets up the multiplayer game
 	   
-      	   make rules: shows you all the rules of the game
+	   make rules: shows you all the rules of the game
+
 
       Execute the code with the following flags:
+      
     	   -s: start a single player game
     	       	 Example: ./bomb_it.exe -h
 		 
 	   -r: shows you all the rules of the game
 		 Example: ./bomb_it.exe -r
+
 
 
