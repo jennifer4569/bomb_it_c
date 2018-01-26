@@ -158,6 +158,10 @@ connieL -- 2018-01-25 10:11 PM
 -------------------------------
 - Ncurses skelly for network client integration
 
+connieL -- 2018-01-25 11:31 PM
+-------------------------------
+- Improved keyboard interception functions
+
 jenniferZ -- 2018-01-25 11:36 PM
 -------------------------------
 - Updated README.md to include:
@@ -169,3 +173,8 @@ jenniferZ -- 2018-01-25 11:36 PM
   - Unresolved issues
   - Mid-developmental design changes
   - Lessons learned
+  
+connieL -- 2018-01-26 1:02 AM
+-------------------------------
+- Added server function to stringify map that will be sent to clients
+  
