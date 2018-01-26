@@ -110,7 +110,7 @@ int server(){
       //if you don't read from stdin, it will continue to trigger select()
       printf("reeeeeeeeeee\n");
       fgets(buffer, sizeof(buffer), stdin);
-      printf("reeeeeeeeeee\n");
+      printf("____%s_____\n", buffer);
       if(strcmp(buffer, "start") == 0){
         start++;
       }else{
