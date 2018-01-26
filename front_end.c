@@ -153,3 +153,35 @@ void display_stats(struct player*p){
     printf("\033[0;91mYOU HAVE DIED!\n");
   }
 }
+
+void map(char* pos, struct map * m, int time){
+  
+  int r = 0;
+  while(r < ROW){
+    int c = 0;
+    while(c < COL){
+      char curr = m->grid[i][j];
+      char sym;
+      if(curr == SAFE){sym = ' ';}
+      else if(curr==UNSAFE){sym ='-';}
+      else if(curr==DESTRUCT){sym ='=';}
+      else if(curr == INDESTRUCT){sym = '#';}
+      else if(curr == PLAYER){sym = 'P';}
+      else if(curr==BOMB){
+	//alternates between the two characters
+	if(time%2){sym ='O';}
+	else{sym ='o';}
+      }
+      else if(curr==POWERUP_ADD_BMB){sym ='+';}
+      else if(curr==POWERUP_BMB_PWR){sym ='*';}
+      else if(curr==POWERUP_ADD_GLV){sym='m';}
+      *pos = c;
+      c ++;
+      pos ++;
+    }
+    r ++;
+    *pos = '\n';
+    pos ++;
+  }
+  pos = '\0';
+}
