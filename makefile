@@ -10,6 +10,9 @@ bomb_player.o: bomb_player.c bomb_it.h
 main.o: main.c bomb_it.h
 	gcc -c main.c bomb_it.h -lcurses
 
+main2.o: main2.c bomb_it.h
+	gcc -c main2.c bomb_it.h -lcurses
+
 clean:
 	-rm -rf *.o
 	-rm -rf *~
@@ -19,17 +22,14 @@ clean:
 run: all
 	./bomb_it.exe
 
-host: all
-	./bomb_it.exe -h
-
-connect: all
-	./bomb_it.exe -c
+single: all
+	./bomb_it.exe -s
 
 rules: all
 	./bomb_it.exe -r
 
-maps: all
-	./bomb_it.exe -m
+multiplayer: main.o front_end.o bomb_player.o
+	gcc -o bomb_it.exe main.o front_end.o bomb_player.o -lcurses
 
 test: all
 	gcc -o testS networking.c bomb_it.h main2.c
