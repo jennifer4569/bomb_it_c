@@ -17,7 +17,6 @@ void getKeys(int* ch1, int* ch2){
   int ch;
   clock_t begin;
   double time_spent;
-  sleep(1);
   begin = clock();
   while(1){
     if ((ch = getch()) == ERR) {
@@ -45,38 +44,36 @@ void resetKeys(int * ch1, int * ch2){
 
 int main(){
   //client establishes connection with server
-  windowSetup();
+  //INSERT CLIENT SERVER HANDSHAKE STUFF
 
-  /*
-  char map[10] = "life";
-  printw(map);
-  refresh();
-  sleep(4);
-  */
+  windowSetup();
   
   int ch1 = 'x';//default values
   int ch2 = ' ';//default values
+  char buffer[3] = { ch1, ch2, '\0'};
 
   //recieves first map
-  //char map[MAP_SIZE];
+  char map[MAP_SIZE];
+  //INSERT STARTING MAP, READ FROM SERVER
   //read(server_socket, map, sizeof(map));
 
   while(1){//game loop
     
-    //reads from server the map
+    //reads map from server
     //read(server_socket, map, sizeof(map));
     /*
-    if read(){//if server sent updated map
+    if read(){//INSERT BOOLEAN/FUNCTION TO CHECK IF CLIENT SUCCESSFULLY READ FROM SERVER
+    
 	clear(); //clears screen
 	printw(map); //prints updated map
     }
     */
 
-    getKeys(&ch1, &ch2); //keyboard interception
+    getKeys(&ch1, &ch2); //keyboard interception, runs for .5 seconds
 
     if( ch1 != 'x'){
-      char buffer[3] = { ch1, ch2, '\0'};
-      if( ch1 != ' '){
+      buffer[0] = ch1;
+      if( ch1 != ' '){ //only send one character
         buffer[2] = '\0';
       }
       //write(server_socket, buffer, sizeof(buffer));
