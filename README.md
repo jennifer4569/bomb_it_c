@@ -63,7 +63,10 @@ From here, there are several options for the commands you can use:
   * *\** : Increase bomb power (increasing its explosion range)
   * *m* : Add gloves (for the rest of the game, you can push bombs around -- while in mid-push, the bomb's timer is frozen.)
 
+
 ---
+---
+
 
 ## Known Bugs/Unresolved Issues:
 * Bomb explosion doesn't always kill players
@@ -112,7 +115,6 @@ From here, there are several options for the commands you can use:
 * **rules.txt**: includes the rules of the game, including controls, how to play, and ascii representations
 
 * **maps/ \*.txt**: includes all the maps we made for 
-
   * **maps/map4.txt**: the final map
   
 * **DESIGN.txt**: the design of the project, includes our plans (created before we started, not updated to current state: see Mid-Development Design Changes)
