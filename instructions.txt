@@ -2,18 +2,16 @@
 
 
       Try:
-	   make host: hosts a game
+	   make single: start a single player game
+	   make multiplayer: sets up the multiplayer game
+	   
       	   make rules: shows you all the rules of the game
 
       Execute the code with the following flags:
-    	   -h: host a new game
+    	   -s: start a single player game
     	       	 Example: ./bomb_it.exe -h
-		 
-	   -c <IP>: connect to the game with IP
-	   	 Example: ./bomb_it.exe -c 149.89.150.101 
 		 
 	   -r: shows you all the rules of the game
 		 Example: ./bomb_it.exe -r
-
 
 

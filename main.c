@@ -70,13 +70,8 @@ int main(int argc, char* argv[]){
    
     return -1;
   }
-  //host a game
-  if(strcmp(argv[1], "-h")==0){
-    //waits for the host to start
-
-
-    
-    //starts game
+  if(strcmp(argv[1], "-s")==0){
+    //starts a single player game
     windowSetup();
     struct map* m = init_game();
     int time = 0;
@@ -91,17 +86,6 @@ int main(int argc, char* argv[]){
     }
     endwin();
     return 1;
-  }
-  //connect to game with key
-  if(strcmp(argv[1], "-c")==0){
-    if(!argv[2]){
-      printf("Please enter a key!\n");
-      return -1;
-    }
-    else{
-      
-      return 1;
-    }
   }
   //rules of the game
   if(strcmp(argv[1], "-r")==0){

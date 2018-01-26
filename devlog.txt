@@ -24,6 +24,9 @@ UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Bomb explosion doesn't always kill players
   - Since the bomb explosion time is so short, the players sometimes step on the explosion range at the right time so that they seemingly die, but they don't.
+- Bomb explosion range glitches out
+  - Doesn't always go through all directions
+- Keyboard interception puts each key into a queue: So if you spam a button too much, you have to wait a long time before you can move to a different direction again
 - Trying to connect with more than four players bugs out the player's terminal
 
 MID-DEVELOPMENT DESIGN CHANGES
@@ -133,15 +136,36 @@ charlesW -- 2018-01-25 08:50 AM
 - Revised function descriptions in header file
 - Added networking function headers to header file
 
-jenniferZ -- 2018-01-25 09:42 AM
--------------------------------
-- Fixed CPU movement so that the direction it chooses to go to is more random
-- Make rules will display the rules now
-
 connieL -- 2018-01-25 11:50 AM
 -------------------------------
 - Ncurses keyboard interception/tried colors
 
+jenniferZ -- 2018-01-25 04:42 PM
+------------------------------
+- Fixed CPU movement so that the direction it chooses to go to is more random
+- Fixed bomb explosion: now it's less buggy
+- Cleaned up code:
+  - Added comments to code
+  - Updated bomb_it.h with new descriptions
+  - -r will display the rules now
+  - Added directions for the user if they executed the program with the wrong flags
+- Added final map
+- Worked on ncurses keyboard interception, now player can move around and drop bombs
+- Removed coloring features
+  - Updated rules to the current ascii values
+
 connieL -- 2018-01-25 10:11 PM
 -------------------------------
 - Ncurses skelly for network client integration
+
+jenniferZ -- 2018-01-25 11:36 PM
+-------------------------------
+- Updated README.md to include:
+  - Description
+  - Required libraries
+  - Instructions
+  - Rules
+- Updated devlog.txt to include:
+  - Unresolved issues
+  - Mid-developmental design changes
+  - Lessons learned

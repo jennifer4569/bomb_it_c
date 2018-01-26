@@ -16,6 +16,7 @@ void windowSetup(){
 }
 
 // parses through ncurses buffer for a command to send to server
+/*
 void getKeys(int* ch1, int* ch2){
   int ch;
   clock_t begin;
@@ -47,10 +48,27 @@ void getKeys(int* ch1, int* ch2){
     }
   }
 }
+*/
+
+void getKeys(int* ch1, int* ch2){
+  *ch1 = getch();
+  if (*ch1 == ' '){
+    while(1){
+      *ch2 = getch();
+      if(*ch2 == ERR){
+	*ch2='\0';
+	break;
+      }
+      if(*ch2 != ' '){
+	break;
+      }
+    }
+  }
+}
 
 void resetKeys(int * ch1, int * ch2){
-  *ch1 = 'x';
-  *ch2 = ' ';
+  *ch1 = '\0';
+  *ch2 = '\0';
 }
 
 int client(char * server){
@@ -65,8 +83,8 @@ int client(char * server){
 
 
   windowSetup();
-  int ch1 = 'x';//default values
-  int ch2 = ' ';//default values
+  int ch1 = '\0';//default values
+  int ch2 = '\0';//default values
   char buffer[3] = { ch1, ch2, '\0'};
   char map[MAP_SIZE];
 
@@ -77,11 +95,9 @@ int client(char * server){
 
     getKeys(&ch1, &ch2); //keyboard interception, runs for .5 seconds
 
-    if( ch1 != 'x'){
+    if( ch1 ){
       buffer[0] = ch1;
-      if( ch1 != ' '){ //only send one character
-        buffer[2] = '\0';
-      }
+      buffer[1] = ch2;
       write(server_socket, buffer, sizeof(buffer));
       resetKeys(&ch1, &ch2); //resets keys after writing
     }

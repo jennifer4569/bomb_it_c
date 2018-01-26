@@ -26,15 +26,15 @@ make
 
 From here, there are several options for the commands you can use:
 
-* Host a new game
+* Start a single player game
 
-      ./bomb_it.exe -h
-      make host
-      
-* Connect to the game with the host's IP address
-	   	
-      ./bomb_it.exe -c 149.89.150.101
-      
+      ./bomb_it.exe -s
+      make single
+
+* Set up a multiplayer game
+
+      make multiplayer
+
 * Shows you all the rules of the game
 		 
       ./bomb_it.exe -r
