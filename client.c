@@ -60,14 +60,10 @@ int main(){
   while(1){//game loop
     
     //reads map from server
-    //read(server_socket, map, sizeof(map));
-    /*
-    if read(){//INSERT BOOLEAN/FUNCTION TO CHECK IF CLIENT SUCCESSFULLY READ FROM SERVER
-    
+    if(read(server_socket, map, sizeof(map)) != -1){
 	clear(); //clears screen
 	printw(map); //prints updated map
     }
-    */
 
     getKeys(&ch1, &ch2); //keyboard interception, runs for .5 seconds
 

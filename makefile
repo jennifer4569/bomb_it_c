@@ -1,3 +1,3 @@
 LDFLAGS=-lncurses
 
-all: demo
+all: client
