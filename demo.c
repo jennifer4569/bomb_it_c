@@ -38,6 +38,11 @@ void getKeys(int* ch1, int* ch2){
   }
 }
 
+void resetKeys(int * ch1, int * ch2){
+  *ch1 = 'x';
+  *ch2 = ' ';
+}
+
 int main(){
   //client establishes connection with server
   windowSetup();
@@ -67,7 +72,7 @@ int main(){
         buffer[2] = '\0';
       }
       //write(server_socket, buffer, sizeof(buffer));
-      resetKeys(&ch1, &ch2); //resets keys after reading
+      resetKeys(&ch1, &ch2); //resets keys after writing
     }
   }
   
