@@ -3,7 +3,7 @@
 
 void windowSetup(){
   initscr(); //initialize the window
-  noecho(); //don't echo any keypresses
+  //noecho(); //don't echo any keypresses
   curs_set(FALSE); //don't display a cursor
   cbreak();
   //start_color();
@@ -13,14 +13,17 @@ void windowSetup(){
 }
 
 int main(){
-  int x = 3, y = 0;
   int ch;
+  int x = 0;
+  int y = 0;
+
   
   windowSetup();
+  sleep(5);
   
   while(1){
-    clear(); //clear screen of previously printed characters
-    mvprintw(y, x, "o");
+    //clear(); //clear screen of previously printed characters
+    //print map server sent back
     //for loop that goes through entire 2D array
     refresh();
     if ((ch = getch()) == ERR) {
@@ -28,20 +31,10 @@ int main(){
     }
     else {
       //user has pressed key ch
-      if(ch == 'w'  && y > 0 ){
-	y -= 1;
-      }
-      else if(ch == 'a' && x > 0){
-	x -= 1;
-      }
-      else if(ch == 's'){
-	y += 1;
-      }
-      else if(ch =='d'){
-	x += 1;
-      }
+      //send server ch
     }
   }
+
   sleep(1);
   endwin(); //restore normal terminal behavior
   return 0;
