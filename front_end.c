@@ -143,8 +143,26 @@ void mapDisplay(char* pos, struct map * m, int time){
   while(r < ROW){
     int c = 0;
     while(c < COL){
-      char curr = m->grid[i][j];
+      char curr = m->grid[r][c];
       char sym;
+	    /*
+	switch(curr)
+	{
+	case SAFE:{sym = ' ';break;}
+	case UNSAFE:{sym ='-';break;}
+	case DESTRUCT:{sym ='=';break;}
+	case INDESTRUCT:{sym = '#';break;}
+	case PLAYER:{sym = 'P';break;}
+	case BOMB:{
+	  if(time % 2){sym ='O';}
+	  else{sym ='o';}
+	  break;
+	}
+	case POWERUP_ADD_BMB:{sym ='+';break;}
+	case POWERUP_BMB_PWR:{sym ='*';break;}
+	case POWERUP_ADD_GLV:{sym='m';break;}
+	}
+	    */
       if(curr == SAFE){sym = ' ';}
       else if(curr==UNSAFE){sym ='-';}
       else if(curr==DESTRUCT){sym ='=';}
@@ -166,5 +184,5 @@ void mapDisplay(char* pos, struct map * m, int time){
     *pos = '\n';
     pos ++;
   }
-  pos = '\0';
+  *pos = '\0';
 }
