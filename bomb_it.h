@@ -38,6 +38,7 @@
 
 #define ROW 20
 #define COL 40
+#define MAP_SIZE 821
 
 //FOR PLAYER MOVEMENT
 #define UP 0
@@ -203,6 +204,14 @@ void display_map(struct map* m, int time);
 */
 void display_stats(struct player*p);
 
+/*
+  void mapDisplay(char* pos, struct map * m, int time)
+  creates the string array of the map
+     char* pos: pointer to string array
+     struct map *m: the map
+     int time: the time
+*/
+void mapDisplay(char* pos, struct map * m, int time);
 
 
 /*
