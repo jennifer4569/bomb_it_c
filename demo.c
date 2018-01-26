@@ -46,6 +46,14 @@ void resetKeys(int * ch1, int * ch2){
 int main(){
   //client establishes connection with server
   windowSetup();
+
+  /*
+  char map[10] = "life";
+  printw(map);
+  refresh();
+  sleep(4);
+  */
+  
   int ch1 = 'x';//default values
   int ch2 = ' ';//default values
 
@@ -57,10 +65,12 @@ int main(){
     
     //reads from server the map
     //read(server_socket, map, sizeof(map));
-    //if read(){
-    //clear(); //clears screen
-    //printw(map); //prints updated map
-    //}
+    /*
+    if read(){//if server sent updated map
+	clear(); //clears screen
+	printw(map); //prints updated map
+    }
+    */
 
     getKeys(&ch1, &ch2); //keyboard interception
 
