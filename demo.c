@@ -48,21 +48,19 @@ int main(){
   windowSetup();
   int ch1 = 'x';//default values
   int ch2 = ' ';//default values
-  int st = 1; //1 means server has sent updated map, 0 means same map
 
   //recieves first map
-  //char * map =
+  //char map[MAP_SIZE];
+  //read(server_socket, map, sizeof(map));
 
   while(1){//game loop
-    if (st) { //1 means server has sent updated map
-      clear(); //clears screen
-      printw(map); //prints updated map
-      st = 0; //sets status back to 0
-    }
     
     //reads from server the map
     //read(server_socket, map, sizeof(map));
-    //st = 1;
+    //if read(){
+    //clear(); //clears screen
+    //printw(map); //prints updated map
+    //}
 
     getKeys(&ch1, &ch2); //keyboard interception
 
@@ -76,10 +74,6 @@ int main(){
     }
   }
   
-  //printw("%c%c", ch1, ch2);
-  //refresh();  
-
-  //sleep(4);
   endwin(); //restore normal terminal behavior
   return 0;
 }
