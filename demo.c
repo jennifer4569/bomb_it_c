@@ -1,9 +1,10 @@
 #include <ncurses.h>
 #include <unistd.h>
+#include <time.h>
 
 void windowSetup(){
   initscr(); //initialize the window
-  //noecho(); //don't echo any keypresses
+  noecho(); //don't echo any keypresses
   curs_set(FALSE); //don't display a cursor
   cbreak();
   //start_color();
@@ -13,29 +14,60 @@ void windowSetup(){
 }
 
 int main(){
-  int ch;
-  int x = 0;
-  int y = 0;
+  char ch;
+  //int x = 0;
+  //int y = 0;
 
   
   windowSetup();
-  sleep(5);
-  
-  while(1){
-    //clear(); //clear screen of previously printed characters
-    //print map server sent back
-    //for loop that goes through entire 2D array
-    refresh();
+  /*
+  char ch1 = 'x';
+  char ch2 = ' ';
+  clock_t begin;
+  double time_spent;
+  begin = clock();
+  while (1){
     if ((ch = getch()) == ERR) {
       //user hasn't moved
     }
     else {
-      //user has pressed key ch
-      //send server ch
+      if (ch1 == ' ' && ch2 == ' '){
+	ch2 = ch;
+      }
+      if( ch1 == 'x' ){
+	ch1 = ch;
+      }
+    }
+    time_spent = (double)(clock() - begin) / CLOCKS_PER_SEC;
+    if(time_spent >= 0.5){
+      break;
     }
   }
+  */
 
-  sleep(1);
+  char ch1 = 'x';
+  char ch2 = ' ';
+  sleep(5);
+  int i = 100;
+  for(int i = 0; i > 0; i--){
+    if ((ch = getch()) == ERR) {
+      //user hasn't moved
+    }
+    else {
+      if (ch1 == ' ' && ch2 == ' '){
+	ch2 = ch;
+      }
+      if(ch1 == 'x'){
+	ch1 = ch;
+      }
+    }
+  }
+  
+  printw(&ch1);
+  printw(&ch2);
+  refresh();  
+
+  sleep(4);
   endwin(); //restore normal terminal behavior
   return 0;
 }
