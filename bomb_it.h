@@ -187,16 +187,6 @@ int * try_move(int * location, int move, int move_pwr);
 */
 struct map* update_map(struct map* m);
 
-/*
-  void print_map(int curr, int colorize, int time, int player_num)
-  prints the map one character at a time, with proper coloring
-     int curr: the key code of the current space
-     int colorize: if colorize is -1, then the printing will not be colorized; else, it will
-     int time: the time
-     int player_num: what number player the current space is; -1 if the space isn't a player
-*/
-void print_map(int curr, int colorize, int time, int player_num);
-
 // display_map() takes in the map, and displays it
 /*
   void display_map(struct map* m, int time)
@@ -207,12 +197,11 @@ void print_map(int curr, int colorize, int time, int player_num);
 void display_map(struct map* m, int time);
 
 /*
-  void display_stats(struct player*p, int colorize)
+  void display_stats(struct player*p)
   displays the player's stats
      struct map *p: the player
-     int colorize: if colorize is -1, then the printing will not be colorized; else, it will
 */
-void display_stats(struct player*p, int colorize);
+void display_stats(struct player*p);
 
 
 

@@ -68,84 +68,6 @@ struct map* update_map(struct map *m){
   return m;
 }
 
-void print_map(int curr, int colorize, int time, int player_num){
-  int format=0;//default
-  int foreground=232; //white
-  int background=100; //gray
-  char c;
-  if(curr == SAFE){
-    c = ' ';
-  }
-  if(curr==UNSAFE){
-    background=41; //red
-    c='-';
-  }
-  if(curr==DESTRUCT){
-    c='#';
-  }
-  if(curr == INDESTRUCT){
-    foreground = 37; //white
-    background = 47; //white
-    c = '#';
-  }
-  if(curr == PLAYER){
-    if(player_num==0){
-      foreground=33;
-    }
-    if(player_num==1){
-      foreground=32;
-    }
-    if(player_num==2){
-      foreground=34;
-    }
-    if(player_num==3){
-      foreground=35;
-    }
-    format = 1;
-    c = 'P';
-  }
-  if(curr==BOMB){
-    foreground=91; //red
-    //alternates between the two characters
-    if(time%2){
-      c='O';
-    }
-    else{
-      c='o';
-    }
-  }
-  if(curr==POWERUP_ADD_BMB){
-    foreground=92;
-    //alternates between underlined and not
-    if(time%2){
-      format=4;
-    }
-    c='+';
-  }
-  if(curr==POWERUP_BMB_PWR){
-    foreground=95;
-    //alternates between underlined and not
-    if(time%2){
-      format=4;
-    }
-    c='*';
-  }
-  if(curr==POWERUP_ADD_GLV){
-    foreground=96;
-    //alternates between underlined and not
-    if(time%2){
-      format=4;
-    }
-    c='m';
-  }
-
-  if(colorize == -1){
-    printw("%c", c);
-  }
-  else{
-    printw("\033[%d;%d;%dm%c", format, foreground, background, c);
-  }
-}
 void display_map(struct map * m, int time){
   clear();
   //prints the grid one by one
@@ -154,21 +76,42 @@ void display_map(struct map * m, int time){
   while(i < ROW){
     j = 0;
     while(j < COL){
-      //if the space has a player on it, then print the player in its respective color
-      if(m->grid[i][j]==PLAYER){
-	int k = 0;
-	while(k < 4){
-	  if(m->players[k]){
-	    if(m->players[k]->location[0]==i && m->players[k]->location[1]==j){
-	    print_map(m->grid[i][j], -1, time, k);
-	    }
-	  }
-	  k++;
+      char curr = m->grid[i][j];
+      char c;
+      if(curr == SAFE){
+	c = ' ';
+      }
+      if(curr==UNSAFE){
+	c='-';
+      }
+      if(curr==DESTRUCT){
+	c='=';
+      }
+      if(curr == INDESTRUCT){
+	c = '#';
+      }
+      if(curr == PLAYER){
+	c = 'P';
+      }
+      if(curr==BOMB){
+	//alternates between the two characters
+	if(time%2){
+	  c='O';
+	}
+	else{
+	  c='o';
 	}
       }
-      else{
-	print_map(m->grid[i][j], -1, time, -1);
+      if(curr==POWERUP_ADD_BMB){
+	c='+';
       }
+      if(curr==POWERUP_BMB_PWR){
+	c='*';
+      }
+      if(curr==POWERUP_ADD_GLV){
+	c='m';
+      }
+      printw("%c", c);
       j++;
     }
     i++;
@@ -176,37 +119,19 @@ void display_map(struct map * m, int time){
   }
 }
 
-void display_stats(struct player*p, int colorize){
-  if(colorize == -1){
-    printf("\n\n");
-    if(p){
-      printw("Player's num bombs:  \t%d\n", p->num_bombs);
-      printw("Player's bomb power: \t%d\n\n", p->bomb_power);
-      if(p->has_gloves == -1){
-	printw("Player doesn't have gloves\n");
-      }
-      else{
-	printw("Player does    have gloves\n");
-      }
+void display_stats(struct player*p){
+  printw("\n\n");
+  if(p){
+    printw("Player's num bombs:  \t%d\n", p->num_bombs);
+    printw("Player's bomb power: \t%d\n\n", p->bomb_power);
+    if(p->has_gloves == -1){
+      printw("Player doesn't have gloves\n");
     }
     else{
-      printw("YOU HAVE DIED!\n");
+      printw("Player does    have gloves\n");
     }
   }
   else{
-    printw("\n\n");
-    if(p){
-      printw("\033[0;92mPlayer's num bombs:  \t%d\n", p->num_bombs);
-      printw("\033[0;95mPlayer's bomb power: \t%d\n\n", p->bomb_power);
-      if(p->has_gloves == -1){
-	printw("\033[0;96mPlayer \033[4;96mdoesn't\033[0;96m have gloves\n");
-      }
-      else{
-	printw("\033[0;96mPlayer \033[4;96mdoes\033[0;96m    have gloves\n");
-      }
-    }
-    else{
-      printw("\033[0;91mYOU HAVE DIED!\n");
-    }
+    printw("YOU HAVE DIED!\n");
   }
 }
