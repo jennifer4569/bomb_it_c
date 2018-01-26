@@ -78,10 +78,10 @@ int main(int argc, char* argv[]){
     while(1){  
       m = update_map(m);
       display_map(m, time);
-      display_stats(m->players[0], -1); //that's you
+      display_stats(m->players[0]); //that's you
       time++;
       refresh();
-      usleep(500000);
+      usleep(250000);
       
     }
     endwin();
