@@ -17,31 +17,29 @@ Format (APPEND TO END)
 firstL -- TIMESTAMP
 **********<>***********
 
-/////////// Zone of Reflection \\\\\\\\\\\
+////////////////////|\\\\\\\\\\\\\\\\\\\\\
 ------------------------------------------
-OBSTACLES OVERCOME
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Bomb explosion doesn't always kill players
   - Since the bomb explosion time is so short, the players sometimes step on the explosion range at the right time so that they seemingly die, but they don't.
-  - There are other undetected reasons, as a player that doesn't move and is on a bomb explosion space doesn't die...
 - Trying to connect with more than four players bugs out the player's terminal
-
-COOL STUFF LEARNED
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+- Removed coloring features
+  - Changed ascii representations of each character to reflect that
+- Didn't implement creating/selecting maps
+- Didn't implement glove powerup features
+- Changed the way powerups were dropped (now it has a 4% chance of appearing on a SAFE space)
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- ncurses doesn't let you hardcode terminal coloring
 
-||||||||||||||||||||||||||||||||||||||||||
+------------------------------------------
+\\\\\\\\\\\\\\\\\\\\\|////////////////////
 
 
 ============================================================
