@@ -63,4 +63,58 @@ From here, there are several options for the commands you can use:
   * *\** : Increase bomb power (increasing its explosion range)
   * *m* : Add gloves (for the rest of the game, you can push bombs around -- while in mid-push, the bomb's timer is frozen.)
 
+---
 
+## Known Bugs/Unresolved Issues:
+* Bomb explosion doesn't always kill players
+  * Since the bomb explosion time is so short, the players sometimes step on the explosion range at the right time so that they seemingly die, but they don't.
+* Bomb explosion range glitches out
+  * Doesn't always go through all directions
+* Keyboard interception puts each key into a queue: So if you spam a button too much, you have to wait a long time before you can move to a different direction again
+* Tried implimenting multiplayer features, but we never got networking to work
+  * Trying to connect with more than four players bugs out the player's terminal
+
+## Attempted:
+* Coloring features
+* Map creation/selection features
+* Multiplayer features
+
+## Mid-Development Design Changes:
+* Removed coloring features
+  * Changed ascii representations of each character to reflect that
+* Didn't implement creating/selecting maps
+* Didn't implement glove powerup features
+* Changed the way powerups were dropped (now it has a 4% chance of appearing on a SAFE space)
+* Didn't implement multiplayer features
+
+## Files & Function Headers
+### Header Files
+
+* **bomb\_it.h**: includes all the headers required for our code.
+
+### .c Files
+
+* **bomb\_player.c**: includes all the definitions of functions necessary for the player, including the bomb functions; mostly used for updating the map
+
+* **front\_end.c**: includes all the definitions of functions necessary for the front end, including display map
+
+* **main.c**: includes all the defintions required for initializing the game, and initializes the game
+
+**NOT USED IN FINAL STATE**
+* **main2.c**: backup for networking in case it breaks
+
+* **networking.c**: networking code
+
+### .txt Files
+
+* **instructions.txt**: includes the instructions on how to start the game using flags
+
+* **rules.txt**: includes the rules of the game, including controls, how to play, and ascii representations
+
+* **maps/ \*.txt**: includes all the maps we made for 
+
+  * **maps/map4.txt**: the final map
+  
+* **DESIGN.txt**: the design of the project, includes our plans (created before we started, not updated to current state: see Mid-Development Design Changes)
+
+* **devlog.txt**: the devlog, including unresolved issues, mid-development design changes, and lessons learned
