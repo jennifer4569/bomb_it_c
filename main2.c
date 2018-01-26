@@ -2,10 +2,53 @@
 /*
   temporary testing main for networking functions
 */
+#include <ncurses.h>
+#include <unistd.h>
+#include <time.h>
+
+void windowSetup(){
+  initscr(); //initialize the window
+  noecho(); //don't echo any keypresses
+  curs_set(FALSE); //don't display a cursor
+  cbreak();
+  //start_color();
+  
+  nodelay(stdscr, TRUE);//makes getch() work in a nonblocking manner
+  //getch() returns ERR if key input is not read
+}
+
+void getKeys(int* ch1, int* ch2){
+  int ch;
+  clock_t begin;
+  double time_spent;
+  begin = clock();
+  while(1){
+    if ((ch = getch()) == ERR) {
+      //user hasn't moved
+    }
+    else {
+      if (*ch1 == ' ' && *ch2 == ' '){
+	*ch2 = ch;
+      }
+      if( *ch1 == 'x' ){
+	*ch1 = ch;
+      }
+    }
+    time_spent = (double)(clock() - begin) / CLOCKS_PER_SEC;
+    if(time_spent >= 0.5){
+      break;
+    }
+  }
+}
+
+void resetKeys(int * ch1, int * ch2){
+  *ch1 = 'x';
+  *ch2 = ' ';
+}
 
 int client(char * server){
   int server_socket;
-  char buffer[BUFFER_SIZE];
+  //char buffer[BUFFER_SIZE];
 
   fd_set read_fds;
 
@@ -15,8 +58,30 @@ int client(char * server){
   else
     server_socket = client_setup( TEST_IP );
 
+  windowSetup();
+  int ch1 = 'x';//default values
+  int ch2 = ' ';//default values
+  char buffer[3] = { ch1, ch2, '\0'};
+  char map[MAP_SIZE]; 
+  
   while (1) {
+    //select(server_socket + 1, &read_fds, NULL, NULL, NULL);
+    read(server_socket, map, sizeof(map));
+    clear(); //clears screen
+    printw(map); //prints updated map
 
+    getKeys(&ch1, &ch2); //keyboard interception, runs for .5 seconds
+
+    if( ch1 != 'x'){
+      buffer[0] = ch1;
+      if( ch1 != ' '){ //only send one character
+        buffer[2] = '\0';
+      }
+      write(server_socket, buffer, sizeof(buffer));
+      resetKeys(&ch1, &ch2); //resets keys after writing
+    }
+    
+    /*
     printf("enter data: ");
     //the above printf does not have \n
     //flush the buffer to immediately print
@@ -30,7 +95,8 @@ int client(char * server){
 
     //select will block until either fd is ready
     select(server_socket + 1, &read_fds, NULL, NULL, NULL);
-
+    */ 
+    /*
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
       *strchr(buffer, '\n') = 0;
@@ -50,17 +116,18 @@ int client(char * server){
       //flush the buffer to immediately print
       fflush(stdout);
     }//end socket select
+    */
 
   }//end loop
+  
+  endwin(); //restore normal terminal behavior
+  return 0;
 }
 
 
 void process(char * s) {
   // somethin
 }
-
-
-
 
 int server(){
   int listen_socket;
@@ -90,14 +157,18 @@ int server(){
     FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
     FD_SET(listen_socket, &read_fds); //add socket to fd set
 
+    printf("asdfasdfasdf");
     //select will block until either fd is ready
     select(listen_socket + 1, &read_fds, NULL, NULL, NULL);
+    printf("asdfasdfasdf");
 
     //if listen_socket triggered select
     if (FD_ISSET(listen_socket, &read_fds)) {
+      printf("reeeeeeeeeeeeeeeeeeeeeeeeeeee");
       client_socket = server_connect(listen_socket);
+      printf("reeeeeeeeeeeeeeeeeeeeeeeeeeee");
       // fill up the players (max 4)
-      if(players < 4){
+      if(players < 5){
         fds[players] = client_socket;
         players ++;
       }else{
@@ -108,9 +179,7 @@ int server(){
     //if stdin triggered select
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       //if you don't read from stdin, it will continue to trigger select()
-      printf("reeeeeeeeeee\n");
       fgets(buffer, sizeof(buffer), stdin);
-      printf("____%s_____\n", buffer);
       if(strcmp(buffer, "start") == 0){
         start++;
       }else{
