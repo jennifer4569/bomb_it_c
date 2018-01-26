@@ -2,40 +2,47 @@
 /*
   temporary testing main for networking functions
 */
-#include <ncurses.h>
-#include <unistd.h>
-#include <time.h>
 
+// set up for map printing and keyboard interception
 void windowSetup(){
   initscr(); //initialize the window
   noecho(); //don't echo any keypresses
   curs_set(FALSE); //don't display a cursor
   cbreak();
   //start_color();
-  
+
   nodelay(stdscr, TRUE);//makes getch() work in a nonblocking manner
   //getch() returns ERR if key input is not read
 }
 
+// parses through ncurses buffer for a command to send to server
 void getKeys(int* ch1, int* ch2){
   int ch;
   clock_t begin;
   double time_spent;
   begin = clock();
+  // loop through as much of the buffer as possible in .1 seconds to find commands
+  // wasd
+  // ' ' designates a bomb and can be paired with a movement command(wasd)
   while(1){
     if ((ch = getch()) == ERR) {
-      //user hasn't moved
+      // no input -> do nothing
     }
     else {
+      // ' ' needs a second command if possible
       if (*ch1 == ' ' && *ch2 == ' '){
-	*ch2 = ch;
+        if (ch == 'w' || ch == 'a' || ch == 's' || ch = 'd')
+        	*ch2 = ch;
       }
+      // ch1 unmodified -> change it to first command
       if( *ch1 == 'x' ){
-	*ch1 = ch;
+        if (ch == 'w' || ch == 'a' || ch == 's' || ch = 'd' || ch = ' ')
+      	 *ch1 = ch;
       }
     }
+    // check if time is up
     time_spent = (double)(clock() - begin) / CLOCKS_PER_SEC;
-    if(time_spent >= 0.5){
+    if(time_spent >= 0.1){
       break;
     }
   }
@@ -50,22 +57,20 @@ int client(char * server){
   int server_socket;
   //char buffer[BUFFER_SIZE];
 
-  fd_set read_fds;
-
   // if given server connect to it else assume loopback
   if(server)
-    server_socket = client_setup( server );
+  server_socket = client_setup( server );
   else
-    server_socket = client_setup( TEST_IP );
+  server_socket = client_setup( TEST_IP );
+
 
   windowSetup();
   int ch1 = 'x';//default values
   int ch2 = ' ';//default values
   char buffer[3] = { ch1, ch2, '\0'};
-  char map[MAP_SIZE]; 
-  
+  char map[MAP_SIZE];
+
   while (1) {
-    //select(server_socket + 1, &read_fds, NULL, NULL, NULL);
     read(server_socket, map, sizeof(map));
     clear(); //clears screen
     printw(map); //prints updated map
@@ -80,7 +85,9 @@ int client(char * server){
       write(server_socket, buffer, sizeof(buffer));
       resetKeys(&ch1, &ch2); //resets keys after writing
     }
-    
+
+    //select(server_socket + 1, &read_fds, NULL, NULL, NULL);
+    // fd_set read_fds;
     /*
     printf("enter data: ");
     //the above printf does not have \n
@@ -95,7 +102,7 @@ int client(char * server){
 
     //select will block until either fd is ready
     select(server_socket + 1, &read_fds, NULL, NULL, NULL);
-    */ 
+    */
     /*
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
@@ -119,7 +126,7 @@ int client(char * server){
     */
 
   }//end loop
-  
+
   endwin(); //restore normal terminal behavior
   return 0;
 }
