@@ -121,7 +121,7 @@ void display_map(struct map * m, int time){
 	while(k < 4){
 	  if(m->players[k]){
 	    if(m->players[k]->location[0]==i && m->players[k]->location[1]==j){
-	    print_map(m->grid[i][j], 1, time, k);
+	      print_map(m->grid[i][j], 1, time, k);
 	    }
 	  }
 	  k++;
@@ -160,21 +160,24 @@ void map(char* pos, struct map * m, int time){
   while(r < ROW){
     int c = 0;
     while(c < COL){
-      char curr = m->grid[i][j];
+      char curr = m->grid[r][c];
       char sym;
-      if(curr == SAFE){sym = ' ';}
-      else if(curr==UNSAFE){sym ='-';}
-      else if(curr==DESTRUCT){sym ='=';}
-      else if(curr == INDESTRUCT){sym = '#';}
-      else if(curr == PLAYER){sym = 'P';}
-      else if(curr==BOMB){
-	//alternates between the two characters
-	if(time%2){sym ='O';}
-	else{sym ='o';}
-      }
-      else if(curr==POWERUP_ADD_BMB){sym ='+';}
-      else if(curr==POWERUP_BMB_PWR){sym ='*';}
-      else if(curr==POWERUP_ADD_GLV){sym='m';}
+      switch(curr)
+	{
+	case SAFE:{sym = ' ';break;}
+	case UNSAFE:{sym ='-';break;}
+	case DESTRUCT:{sym ='=';break;}
+	case INDESTRUCT:{sym = '#';break;}
+	case PLAYER:{sym = 'P';break;}
+	case BOMB:{
+	  if(time % 2){sym ='O';}
+	  else{sym ='o';}
+	  break;
+	}
+	case POWERUP_ADD_BMB:{sym ='+';break;}
+	case POWERUP_BMB_PWR:{sym ='*';break;}
+	case POWERUP_ADD_GLV:{sym='m';break;}
+	}
       *pos = c;
       c ++;
       pos ++;
@@ -183,5 +186,5 @@ void map(char* pos, struct map * m, int time){
     *pos = '\n';
     pos ++;
   }
-  pos = '\0';
+  *pos = '\0';
 }
