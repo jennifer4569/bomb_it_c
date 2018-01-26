@@ -139,3 +139,11 @@ jenniferZ -- 2018-01-25 09:42 AM
 -------------------------------
 - Fixed CPU movement so that the direction it chooses to go to is more random
 - Make rules will display the rules now
+
+connieL -- 2018-01-25 11:50 AM
+-------------------------------
+- Ncurses keyboard interception/tried colors
+
+connieL -- 2018-01-25 10:11 PM
+-------------------------------
+- Ncurses skelly for network client integration
