@@ -90,18 +90,14 @@ int server(){
     FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
     FD_SET(listen_socket, &read_fds); //add socket to fd set
 
-    printf("asdfasdfasdf");
     //select will block until either fd is ready
     select(listen_socket + 1, &read_fds, NULL, NULL, NULL);
-    printf("asdfasdfasdf");
 
     //if listen_socket triggered select
     if (FD_ISSET(listen_socket, &read_fds)) {
-      printf("reeeeeeeeeeeeeeeeeeeeeeeeeeee");
       client_socket = server_connect(listen_socket);
-      printf("reeeeeeeeeeeeeeeeeeeeeeeeeeee");
       // fill up the players (max 4)
-      if(players < 5){
+      if(players < 4){
         fds[players] = client_socket;
         players ++;
       }else{
@@ -112,7 +108,9 @@ int server(){
     //if stdin triggered select
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       //if you don't read from stdin, it will continue to trigger select()
+      printf("reeeeeeeeeee\n");
       fgets(buffer, sizeof(buffer), stdin);
+      printf("reeeeeeeeeee\n");
       if(strcmp(buffer, "start") == 0){
         start++;
       }else{
