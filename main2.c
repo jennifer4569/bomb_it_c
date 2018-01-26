@@ -15,7 +15,6 @@ void windowSetup(){
   //getch() returns ERR if key input is not read
 }
 
-// parses through ncurses buffer for a command to send to server
 /*
 void getKeys(int* ch1, int* ch2){
   int ch;
@@ -50,17 +49,18 @@ void getKeys(int* ch1, int* ch2){
 }
 */
 
+// parses through ncurses buffer for a command to send to server
 void getKeys(int* ch1, int* ch2){
   *ch1 = getch();
   if (*ch1 == ' '){
     while(1){
       *ch2 = getch();
       if(*ch2 == ERR){
-	*ch2='\0';
-	break;
+      	*ch2='\0';
+      	break;
       }
       if(*ch2 != ' '){
-	break;
+      	break;
       }
     }
   }
