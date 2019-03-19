@@ -1,6 +1,5 @@
 # Bomb It C!
 ### by Connie Lei, Charles Weng, and Jennifer Zhang
-**Systems Level Programming, Period 4** 
 
 
 ## Description
@@ -74,8 +73,9 @@ From here, there are several options for the commands you can use:
 * Bomb explosion range glitches out
   * Doesn't always go through all directions
 * Keyboard interception puts each key into a queue: So if you spam a button too much, you have to wait a long time before you can move to a different direction again
-* Tried implimenting multiplayer features, but we never got networking to work
+* Tried implimenting multiplayer features, but could not get networking to work
   * Trying to connect with more than four players bugs out the player's terminal
+* Ascii characters make it somewhat difficult to visually see the gameplay
 
 ## Attempted:
 * Coloring features
